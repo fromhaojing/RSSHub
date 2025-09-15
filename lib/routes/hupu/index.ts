@@ -30,7 +30,7 @@ export const route: Route = {
     name: '手机虎扑网',
     url: 'm.hupu.com',
     maintainers: ['nczitzk', 'hyoban'],
-    example: 'hupu/nba',
+    example: '/hupu/nba',
     parameters: {
         category: {
             description: '分类，可选值：nba、cba、soccer，默认为空（首页）',
@@ -43,7 +43,7 @@ export const route: Route = {
     },
     description: `::: tip
 电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [\`/hupu/all/all-gg\`](https://rsshub.app/hupu/all/all-gg)。
-    :::`,
+:::`,
     categories: ['bbs'],
     radar: [
         {
