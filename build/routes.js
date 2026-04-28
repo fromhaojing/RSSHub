@@ -38074,7 +38074,22 @@ export default {
         "module": () => import('@/routes/douban/people/wish.ts')
       }
     },
-    "apiRoutes": {},
+    "apiRoutes": {
+      "/book/isbnDetail/:isbn": {
+        "path": "/book/isbnDetail/:isbn",
+        "maintainers": [
+          "lyqluis"
+        ],
+        "parameters": {
+          "isbn": {
+            "description": "ISBN 码，例如 `9787541161834`"
+          }
+        },
+        "description": "通过 ISBN 搜索豆瓣图书条目，并解析图书详情页返回结构化 JSON。",
+        "location": "book/isbn-detail.ts",
+        "module": () => import('@/routes/douban/book/isbn-detail.ts')
+      }
+    },
     "name": "豆瓣",
     "url": "www.douban.com",
     "lang": "zh-CN"
