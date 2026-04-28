@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     if (!isbn) {
         return {
-            code: 400,
+            code: 0,
             message: '请提供有效的 ISBN，支持 10 位或 13 位 ISBN。',
         };
     }
@@ -78,7 +78,7 @@ async function handler(ctx) {
 
     if (!subjectId) {
         return {
-            code: 404,
+            code: 0,
             message: `未在豆瓣搜索结果中找到 ISBN ${isbn} 对应的图书条目。`,
         };
     }
@@ -94,7 +94,7 @@ async function handler(ctx) {
     const $ = load(subjectResponse.data);
 
     return {
-        code: 0,
+        code: 200,
         data: await parseBookDetail($, isbn, subjectId, url, searchItem),
     };
 }
