@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from './cache';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import cache from './cache';
 
 export const route: Route = {
     path: '/manga/followings/:uid/:limits?',
@@ -46,7 +47,7 @@ async function handler(ctx) {
     const link = 'https://manga.bilibili.com/account-center';
     const response = await got({
         method: 'POST',
-        url: `https://manga.bilibili.com/twirp/bookshelf.v1.Bookshelf/ListFavorite?device=pc&platform=web`,
+        url: 'https://manga.bilibili.com/twirp/bookshelf.v1.Bookshelf/ListFavorite?device=pc&platform=web',
         json: { page_num: 1, page_size, order: 2, wait_free: 0 },
         headers: {
             Referer: link,

@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/subscription/:parameters?',
@@ -70,7 +70,7 @@ async function handler(ctx) {
             title: item.title,
             link: item.site_url,
             pubData: item.last_modified_header,
-            description: 'Feed URL: ' + `<a href=${item.feed_url}>${item.feed_url}</a>`,
+            description: `Feed URL: <a href=${item.feed_url}>${item.feed_url}</a>`,
         });
     }
 
@@ -120,9 +120,9 @@ async function handler(ctx) {
     }
 
     return {
-        title: `MiniFlux | Subscription List`,
+        title: 'MiniFlux | Subscription List',
         link: instance,
-        description: `A subscription tracking feed.`,
+        description: 'A subscription tracking feed.',
         item: subscription,
         allowEmpty: true,
     };

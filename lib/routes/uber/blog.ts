@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootURL = 'https://www.uber.com';
@@ -84,7 +85,7 @@ async function handler() {
     );
 
     return {
-        title: `Uber Engineering Blog`,
+        title: 'Uber Engineering Blog',
         link: rootURL + '/blog/engineering',
         description: 'The technology behind Uber Engineering',
         item: result,

@@ -1,8 +1,9 @@
-import { Data, DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import { Context } from 'hono';
 
 export const route: Route = {
     path: '/:category?/:tab?',
@@ -40,7 +41,7 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await got(currentUrl);
     const $ = load(response.data as any);
 
-    let selector = `.news`;
+    let selector = '.news';
     if (tab !== 'all') {
         selector = `#${tab} > ${selector}`;
     }

@@ -1,11 +1,10 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from '../templates/description';
 import { parseArticle } from './utils';
 
 export const route: Route = {
@@ -38,7 +37,7 @@ async function handler(ctx) {
 
     const getColumnDetail = `https://api.nfapp.southcn.com/nanfang_if/getColumn?columnId=${columnId}`;
     const { data: responseColumn } = await got(getColumnDetail);
-    const columnName = responseColumn.columnName === '' ? `南方+` : `南方+ - ${responseColumn.columnName}`;
+    const columnName = responseColumn.columnName === '' ? '南方+' : `南方+ - ${responseColumn.columnName}`;
     const columnLink = responseColumn.linkUrl === '' ? `https://m.nfapp.southcn.com/${columnId}` : responseColumn.linkUrl;
 
     /* Notes of columnLink:
@@ -53,7 +52,7 @@ async function handler(ctx) {
         .filter((i) => i.articleType === 0)
         .map((item) => ({
             title: '【' + item.columnName + '】' + item.title,
-            description: art(path.join(__dirname, '../templates/description.art'), {
+            description: renderDescription({
                 thumb: item.picMiddle,
                 description: item.summary === '详见内文' ? '' : item.summary,
             }),

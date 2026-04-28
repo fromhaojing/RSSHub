@@ -1,7 +1,8 @@
-import { Route, Data, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -60,7 +61,7 @@ async function handler(ctx): Promise<Data> {
         }
     } else {
         // exclude category-joshi to get result of general
-        apiUrl += `?categories_exclude=1598`;
+        apiUrl += '?categories_exclude=1598';
     }
 
     const posts = await ofetch(apiUrl, {

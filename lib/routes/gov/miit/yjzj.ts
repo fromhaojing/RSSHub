@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.miit.gov.cn';
@@ -70,7 +71,7 @@ async function handler() {
 
                 item.description = content('#con_con')
                     .html()
-                    .replaceAll(/(<iframe.*?src=")(.*?)(".*?>)/g, '$1' + rootUrl + '$2' + '$3');
+                    ?.replaceAll(/(<iframe.*?src=")(.*?)(".*?>)/g, '$1' + rootUrl + '$2$3');
 
                 return item;
             })
@@ -78,7 +79,7 @@ async function handler() {
     );
 
     return {
-        title: `工业和信息化部 - 意见征集`,
+        title: '工业和信息化部 - 意见征集',
         link: url,
         item: items,
     };

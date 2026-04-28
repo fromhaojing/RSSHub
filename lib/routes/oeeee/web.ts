@@ -1,12 +1,11 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 import { parseArticle } from './utils';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const route: Route = {
     path: '/web/:channel',
@@ -36,7 +35,7 @@ async function handler(ctx) {
 
     const list = response.data.map((item) => ({
         title: '【' + item.channel_name + '】' + item.title,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             thumb: item.img,
             description: item.summary,
         }),
@@ -52,7 +51,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
     return {
-        title: `南方都市报奥一网`,
+        title: '南方都市报奥一网',
         link: `https://www.oeeee.com/api/channel.php?s=/index/index/channel/${channelEname}`,
         item: items,
     };

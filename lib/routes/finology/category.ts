@@ -1,6 +1,8 @@
-import { Data, Route } from '@/types';
-import { getItems } from './utils';
 import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
+
+import { getItems } from './utils';
 
 export const route: Route = {
     path: '/category/:category',
@@ -42,7 +44,7 @@ async function handler(ctx: Context) {
     const extra = {
         description: (topic: string) => `Articles for your research and knowledge under ${topic}`,
         date: true,
-        selector: `div.card`,
+        selector: 'div.card',
     };
     return await commonHandler('https://insider.finology.in', `/${category}`, extra);
 }

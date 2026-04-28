@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootURL = 'https://gsee.swjtu.edu.cn';
@@ -51,7 +52,7 @@ export const route: Route = {
     name: '地球科学与工程学院',
     maintainers: ['E1nzbern'],
     handler,
-    description: `研究生教育通知公告`,
+    description: '研究生教育通知公告',
 };
 
 async function handler() {

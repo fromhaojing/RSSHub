@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/:city',
@@ -58,7 +59,7 @@ async function handler(ctx) {
     const title =
         $('title')
             .text()
-            .replace(/-爱上本地宝，生活会更好/, '') + `焦点资讯`;
+            .replace(/-爱上本地宝，生活会更好/, '') + '焦点资讯';
 
     let items = $('ul.focus-news li')
         .toArray()

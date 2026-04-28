@@ -1,8 +1,8 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import * as url from 'node:url';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?',
@@ -49,7 +49,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const rootUrl = `https://www.nowcoder.com/job/center/`;
+    const rootUrl = 'https://www.nowcoder.com/job/center/';
     const currentUrl = `${rootUrl}?${ctx.req.param('type') ? 'type=' + ctx.req.param('type') : ''}${ctx.req.param('city') ? '&city=' + ctx.req.param('city') : ''}${ctx.req.param('order') ? '&order=' + ctx.req.param('order') : ''}${
         ctx.req.param('recruitType') ? '&recruitType=' + ctx.req.param('recruitType') : ''
     }${ctx.req.param('latest') ? '&latest=' + ctx.req.param('latest') : ''}`;
@@ -76,7 +76,7 @@ async function handler(ctx) {
             }
             return {
                 title: `${company.text()} | ${title.text()}`,
-                link: url.resolve(rootUrl, title.attr('href')),
+                link: new URL(title.attr('href'), rootUrl).href,
                 pubDate: date.toUTCString(),
             };
         });

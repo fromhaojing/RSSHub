@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -63,7 +63,7 @@ async function handler(ctx) {
 
     return {
         title: `当当开放平台 - ${typeMap[type] || typeMap[0]}`,
-        link: `https://open.dangdang.com/home/notice/message/1`,
+        link: 'https://open.dangdang.com/home/notice/message/1',
         item: result,
     };
 }

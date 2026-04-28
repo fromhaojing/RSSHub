@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 /* 研究生院 */
@@ -63,7 +64,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('invalid keyId');
     }
     let link = `${host}/pubweb/homePageList`;
-    link += keyId === '2' ? `/searchContent.view` : `/recruitStudents.view?keyId=${keyId}`;
+    link += keyId === '2' ? '/searchContent.view' : `/recruitStudents.view?keyId=${keyId}`;
     const response = await got({
         method: 'get',
         url: link,

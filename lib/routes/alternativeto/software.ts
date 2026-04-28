@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { baseURL, puppeteerGet } from './utils';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { baseURL, puppeteerGet } from './utils';
 
 export const route: Route = {
     path: '/software/:name/:routeParams?',
@@ -25,7 +27,7 @@ export const route: Route = {
     name: 'Software Alternatives',
     maintainers: ['JimenezLi'],
     handler,
-    description: `> routeParms can be copied from original site URL, example: \`/alternativeto/software/cpp/license=opensource&platform=windows\``,
+    description: '> routeParms can be copied from original site URL, example: `/alternativeto/software/cpp/license=opensource&platform=windows`',
 };
 
 async function handler(ctx) {

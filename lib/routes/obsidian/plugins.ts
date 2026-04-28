@@ -1,5 +1,4 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -12,13 +11,13 @@ export const route: Route = {
 };
 
 async function handler() {
-    const data = JSON.parse(await ofetch('https://raw.githubusercontent.com/obsidianmd/obsidian-releases/refs/heads/master/community-plugins.json')) as {
+    const data = JSON.parse(await ofetch('https://raw.githubusercontent.com/obsidianmd/obsidian-releases/refs/heads/master/community-plugins.json')) as Array<{
         id: string;
         name: string;
         author: string;
         description: string;
         repo: string;
-    }[];
+    }>;
     const stats = JSON.parse(await ofetch('https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-plugin-stats.json')) as {
         [key: string]: {
             downloads: number;
@@ -28,7 +27,7 @@ async function handler() {
 
     return {
         title: 'Obsidian Plugins',
-        link: `https://obsidian.md/plugins`,
+        link: 'https://obsidian.md/plugins',
         item: data.map((item) => ({
             title: item.name,
             description: `${item.description}<br><br>Downloads: ${stats[item.id].downloads}`,

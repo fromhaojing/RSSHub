@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import puppeteer from '@/utils/puppeteer';
 
@@ -28,7 +29,7 @@ export const route: Route = {
     name: 'First Release',
     maintainers: ['y9c', 'TonyRL'],
     handler,
-    description: `*only Science, Science Immunology and Science Translational Medicine have first release*`,
+    description: '*only Science, Science Immunology and Science Translational Medicine have first release*',
 };
 
 async function handler(ctx) {

@@ -1,7 +1,9 @@
 import crypto from 'node:crypto';
+
 import { hextob64, KJUR } from 'jsrsasign';
-import ofetch from '@/utils/ofetch';
+
 import { config } from '@/config';
+import ofetch from '@/utils/ofetch';
 
 // The following constant is extracted from this script: https://file.caixin.com/pkg/cx-pay-layer/js/wap.js?v=5.15.421933 . It is believed to contain no sensitive information.
 // Refer to this discussion for further explanation: https://github.com/DIYgod/RSSHub/pull/17231
@@ -32,8 +34,8 @@ export async function getFulltext(url: string) {
     const sigValueHex = hextob64(sig.sign());
 
     const isWeekly = url.includes('weekly');
-    const res = await ofetch(`https://gateway.caixin.com/api/newauth/checkAuthByIdJsonp`, {
-        params: {
+    const res = await ofetch('https://gateway.caixin.com/api/newauth/checkAuthByIdJsonp', {
+        query: {
             type: 1,
             page: isWeekly ? 0 : 1,
             rand: Math.random(),

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/myft/:key',
@@ -68,9 +69,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: `FT.com - myFT`,
+        title: 'FT.com - myFT',
         link,
-        description: `FT.com - myFT`,
+        description: 'FT.com - myFT',
         item: items,
     };
 }

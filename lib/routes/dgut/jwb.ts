@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -58,7 +59,7 @@ async function handler(ctx) {
 
                 return {
                     ...item,
-                    description: $('div.v_news_content').first().html() || undefined,
+                    description: $('div.v_news_content').html(),
                 };
             })
         )

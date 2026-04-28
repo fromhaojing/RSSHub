@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import oftech from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/articles',
@@ -47,7 +48,7 @@ const render = (widgets) =>
                     return `<div><ul>${w.keyFacts.map((k) => `<li>${k.text}</li>`).join('')}</ul></div>`;
                 case 'inlineVideo':
                     return w.provider === 'youtube'
-                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen></iframe>`
+                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`
                         : new Error(`Unhandled inlineVideo provider: ${w.provider}`);
                 case 'inlineImage':
                     return w.inlineImageImages
@@ -63,40 +64,42 @@ const render = (widgets) =>
         .join('');
 
 async function handler() {
-    const baseURL = `https://sustainabilitymag.com`;
+    const baseURL = 'https://sustainabilitymag.com';
     const feedURL = `${baseURL}/articles`;
     const feedLang = 'en';
     const feedDescription = 'Sustainability Magazine Articles';
 
     const requestEndpoint = `${baseURL}/graphql`;
     const requestBody = JSON.stringify({
-        query: `query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
-          paginatedWidget(url: $url, widgetType: $widgetType) {
-            ... on SimpleArticleGridWidget {
-              articles(page: $page) {
-                results {
-                  _id
-                  headline
-                  fullUrlPath
-                  featured
-                  category
-                  contentType
-                  tags {
-                    tag
-                  }
-                  attribution
-                  subAttribution
-                  sell
-                  images {
-                    thumbnail_widescreen_553 {
-                      url
+        query: /* GraphQL */ `
+            query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
+                paginatedWidget(url: $url, widgetType: $widgetType) {
+                    ... on SimpleArticleGridWidget {
+                        articles(page: $page) {
+                            results {
+                                _id
+                                headline
+                                fullUrlPath
+                                featured
+                                category
+                                contentType
+                                tags {
+                                    tag
+                                }
+                                attribution
+                                subAttribution
+                                sell
+                                images {
+                                    thumbnail_widescreen_553 {
+                                        url
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          }
-        }`,
+        `,
         operationName: 'PaginatedQuery',
         variables: {
             widgetType: 'simpleArticleGrid',

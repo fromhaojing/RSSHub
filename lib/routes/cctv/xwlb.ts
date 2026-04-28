@@ -1,11 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+
 dayjs.extend(customParseFormat);
 
 export const route: Route = {
@@ -42,7 +44,7 @@ export const route: Route = {
     maintainers: ['zengxs'],
     handler,
     url: 'tv.cctv.com/lm/xwlb',
-    description: `新闻联播内容摘要。`,
+    description: '新闻联播内容摘要。',
 };
 
 async function handler(ctx) {

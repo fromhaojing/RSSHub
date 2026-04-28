@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import ofetch from '@/utils/ofetch';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/advisor/data/:type?/:category?',
@@ -52,7 +53,7 @@ async function handler(ctx) {
 
     const apiRootUrl = 'https://github.com/advisories';
     const apiUrl = `${apiRootUrl}?query=type%3A${type}+ecosystem%3A${category}`;
-    const currentUrl = `https://github.com/advisories`;
+    const currentUrl = 'https://github.com/advisories';
 
     const response = await got({
         method: 'get',

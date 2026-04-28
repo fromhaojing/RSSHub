@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -24,7 +24,7 @@ async function handler() {
     }));
 
     return {
-        title: `金米奖 - 小米应用商店`,
+        title: '金米奖 - 小米应用商店',
         link,
         item: list,
         description: response.data.description,

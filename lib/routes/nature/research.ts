@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 // example usage: `/nature/research/ng`
 // The journals from NPG are run by different group of people,
 // and the website of may not be consitent for all the journals
@@ -13,10 +12,12 @@ import { Route } from '@/types';
 // nchem:            Nature Chemistry
 // nmat:             Nature Materials
 // natmachintell:    Nature Machine Intelligence
-
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { baseUrl, cookieJar, getArticleList, getDataLayer, getArticle } from './utils';
+
+import { baseUrl, cookieJar, getArticle, getArticleList, getDataLayer } from './utils';
 
 export const route: Route = {
     path: '/research/:journal?',
@@ -73,7 +74,7 @@ async function handler(ctx) {
 
     return {
         title: `Nature (${pageTitle}) | Latest Research`,
-        description: pageCapture('meta[name="description"]').attr('content') || `Nature, a nature research journal`,
+        description: pageCapture('meta[name="description"]').attr('content') || 'Nature, a nature research journal',
         link: pageURL,
         item: items,
     };

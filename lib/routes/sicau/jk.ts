@@ -1,6 +1,6 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -83,7 +83,7 @@ export const route: Route = {
             method: 'post',
         });
         const query = async (page: number) =>
-            await $post(`/getUserSchoolActList`, {
+            await $post('/getUserSchoolActList', {
                 query: {
                     gid: gidDict[gid],
                     typeId: typeDict[typeId],

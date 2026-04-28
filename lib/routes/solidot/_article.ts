@@ -1,5 +1,6 @@
-import got from '@/utils/got'; // get web content
 import { load } from 'cheerio'; // html parser
+
+import got from '@/utils/got'; // get web content
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -32,11 +33,11 @@ export default async function get_article(url) {
     $('div.talk_time').remove();
     const description = $('div.block_m')
         .html()
-        .replaceAll(/(href.*?)<u>(.*?)<\/u>/g, `$1$2`)
+        .replaceAll(/(href.*?)<u>(.*?)<\/u>/g, '$1$2')
         .replaceAll('href="/', 'href="' + domain + '/')
         // Preserve the not extremely disturbing donation ad
         // to support the site.
-        .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, `<br><br>$1`);
+        .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, '<br><br>$1');
 
     const item = {
         title,
