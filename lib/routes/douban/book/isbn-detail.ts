@@ -95,14 +95,15 @@ async function handler(ctx) {
 
     return {
         code: 0,
-        data: parseBookDetail($, isbn, subjectId, url, searchItem),
+        data: await parseBookDetail($, isbn, subjectId, url, searchItem),
     };
 }
 
-function parseBookDetail($, isbn: string, subjectId: string, url: string, searchItem?: SearchItem) {
+async function parseBookDetail($, isbn: string, subjectId: string, url: string, searchItem?: SearchItem) {
     const schema = parseJsonLd($);
     const info = parseInfo($);
     const bookInfo = { ...info };
+    delete bookInfo.raw;
     const title = normalizeText($('h1.title span[property="v:itemreviewed"]').first().text()) || normalizeText($('meta[property="og:title"]').attr('content')) || schema?.name || searchItem?.target?.title;
     const subtitle = normalizeText($('h2.subtitle span[property="v:subtitle"]').first().text());
     const cover = resolveUrl($('#mainpic a.nbg').attr('href') || $('#mainpic img').attr('src') || $('meta[property="og:image"]').attr('content'), url);
@@ -117,6 +118,7 @@ function parseBookDetail($, isbn: string, subjectId: string, url: string, search
         subtitle,
         cover,
         info: bookInfo,
+        series: await parseSeries($, url),
         rating: parseRating($),
         summary,
         authorIntro: getHeadingSectionText($, '作者简介'),
@@ -249,6 +251,107 @@ function parseBlockquotes($, baseUrl: string) {
             };
         })
         .filter((item) => item.text);
+}
+
+function parseSeries($, baseUrl: string) {
+    const seriesLinks = parseSeriesLinks($, baseUrl);
+
+    return Promise.all(seriesLinks.map((series) => fetchSeries(series)));
+}
+
+function parseSeriesLinks($, baseUrl: string) {
+    const seriesItems = new Map();
+
+    for (const element of $('#info a[href*="/series/"]').toArray()) {
+        const title = normalizeText($(element).text());
+        const url = resolveUrl($(element).attr('href'), baseUrl);
+
+        if (url || title) {
+            seriesItems.set(url || title, { title, url });
+        }
+    }
+
+    return [...seriesItems.values()];
+}
+
+async function fetchSeries(series) {
+    if (!series.url) {
+        return {
+            ...series,
+            books: [],
+        };
+    }
+
+    const response = await got({
+        url: series.url,
+        headers: {
+            Referer: mobileBaseUrl,
+            'User-Agent': config.trueUA,
+        },
+    });
+    const $ = load(response.data);
+    const title = normalizeText($('h1').first().text()) || series.title;
+
+    return {
+        ...series,
+        title,
+        books: parseSeriesBooks($, series.url),
+    };
+}
+
+function parseSeriesBooks($, baseUrl: string) {
+    return $('.subject-list .subject-item')
+        .toArray()
+        .map((element) => {
+            const item = $(element);
+            const titleLink = item.find('.info h2 a').first();
+            const subtitle = normalizeText(titleLink.find('span').first().text().replace(':', ''));
+            const url = resolveUrl(titleLink.attr('href'), baseUrl);
+            const info = normalizeText(item.find('.pub').text());
+            const buyInfoLink = item.find('.buy-info a').first();
+            const ratingClass = item
+                .find('.star [class*="allstar"]')
+                .attr('class')
+                ?.match(/allstar(\d+)/)?.[1];
+
+            return {
+                subjectId: url?.match(/\/subject\/(\d+)\//)?.[1],
+                title: normalizeText(titleLink.attr('title') || titleLink.clone().children().remove().end().text()),
+                subtitle,
+                url,
+                cover: resolveUrl(item.find('.pic img').attr('src'), baseUrl),
+                info,
+                meta: parseSeriesBookInfo(info),
+                rating: {
+                    value: parseNumber(item.find('.rating_nums').text()),
+                    count: parseNumber(item.find('.star .pl').text()),
+                    starCount: ratingClass ? Number(ratingClass) / 10 : undefined,
+                    text: normalizeText(item.find('.star').text()),
+                },
+                summary: normalizeText(item.find('.info > p').first().text()),
+                buyInfo: {
+                    text: normalizeText(buyInfoLink.text()),
+                    url: resolveUrl(buyInfoLink.attr('href'), baseUrl),
+                    price: normalizeText(buyInfoLink.text().replace('纸质版', '')),
+                },
+            };
+        })
+        .filter((item) => item.title || item.url);
+}
+
+function parseSeriesBookInfo(info?: string) {
+    if (!info) {
+        return;
+    }
+
+    const [author, publisher, published, price] = info.split('/').map((item) => normalizeText(item));
+
+    return {
+        author,
+        publisher,
+        published,
+        price,
+    };
 }
 
 function parseReviews($, baseUrl: string) {
