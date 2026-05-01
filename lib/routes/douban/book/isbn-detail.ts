@@ -42,12 +42,13 @@ export const apiRoute: APIRoute = {
             description: 'ISBN 码，例如 `9787541161834`',
         },
     },
-    description: '通过 ISBN 搜索豆瓣图书条目，并解析图书详情页返回结构化 JSON。',
+    description: '通过 ISBN 搜索豆瓣图书条目，并解析图书详情页返回结构化 JSON。传入 `fetchSeries=true` 时获取丛书信息。',
     handler,
 };
 
 async function handler(ctx) {
     const isbn = normalizeIsbn(ctx.req.param('isbn'));
+    const shouldFetchSeries = ctx.req.query('fetchSeries') === 'true';
 
     if (!isbn) {
         return {
@@ -95,11 +96,11 @@ async function handler(ctx) {
 
     return {
         code: 200,
-        data: await parseBookDetail($, isbn, subjectId, url, searchItem),
+        data: await parseBookDetail($, isbn, subjectId, url, shouldFetchSeries, searchItem),
     };
 }
 
-async function parseBookDetail($, isbn: string, subjectId: string, url: string, searchItem?: SearchItem) {
+async function parseBookDetail($, isbn: string, subjectId: string, url: string, shouldFetchSeries: boolean, searchItem?: SearchItem) {
     const schema = parseJsonLd($);
     const info = parseInfo($);
     const bookInfo = { ...info };
@@ -118,7 +119,7 @@ async function parseBookDetail($, isbn: string, subjectId: string, url: string, 
         subtitle,
         cover,
         info: bookInfo,
-        series: await parseSeries($, url),
+        series: shouldFetchSeries ? await parseSeries($, url) : undefined,
         rating: parseRating($),
         summary,
         authorIntro: getHeadingSectionText($, '作者简介'),
