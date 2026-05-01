@@ -38085,7 +38085,7 @@ export default {
             "description": "ISBN 码，例如 `9787541161834`"
           }
         },
-        "description": "通过 ISBN 搜索豆瓣图书条目，并解析图书详情页返回结构化 JSON。",
+        "description": "通过 ISBN 搜索豆瓣图书条目，并解析图书详情页返回结构化 JSON。传入 `fetchSeries=true` 时获取丛书信息。",
         "location": "book/isbn-detail.ts",
         "module": () => import('@/routes/douban/book/isbn-detail.ts')
       }
