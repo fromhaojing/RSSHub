@@ -105122,6 +105122,45 @@ export default {
     },
     "lang": "zh-CN"
   },
+  "rule34video": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/rule34video/latest",
+        "description": "Latest updates from Rule34 Video",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "rule34video.com/latest-updates/"
+            ],
+            "target": "/latest"
+          }
+        ],
+        "name": "Latest Updates",
+        "maintainers": [
+          "ashi-koki"
+        ],
+        "location": "latest.ts",
+        "module": () => import('@/routes/rule34video/latest.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Rule34Video",
+    "url": "rule34video.com",
+    "lang": "en"
+  },
   "runyeah": {
     "routes": {
       "/": {
