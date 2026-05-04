@@ -16178,6 +16178,31 @@ export default {
         "location": "article.ts",
         "module": () => import('@/routes/bilibili/article.ts')
       },
+      "/video/danmaku/:bvid/:pid?": {
+        "path": "/video/danmaku/:bvid/:pid?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/bilibili/video/danmaku/BV1vA411b7ip/1",
+        "parameters": {
+          "bvid": "视频AV号,可在视频页 URL 中找到",
+          "pid": "分P号,不填默认为1"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "视频弹幕",
+        "maintainers": [
+          "Qixingchen"
+        ],
+        "location": "danmaku.ts",
+        "module": () => import('@/routes/bilibili/danmaku.ts')
+      },
       "/user/coin/:uid/:embed?": {
         "path": "/user/coin/:uid/:embed?",
         "categories": [
@@ -16211,31 +16236,6 @@ export default {
         "location": "coin.ts",
         "module": () => import('@/routes/bilibili/coin.ts')
       },
-      "/video/danmaku/:bvid/:pid?": {
-        "path": "/video/danmaku/:bvid/:pid?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/bilibili/video/danmaku/BV1vA411b7ip/1",
-        "parameters": {
-          "bvid": "视频AV号,可在视频页 URL 中找到",
-          "pid": "分P号,不填默认为1"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "视频弹幕",
-        "maintainers": [
-          "Qixingchen"
-        ],
-        "location": "danmaku.ts",
-        "module": () => import('@/routes/bilibili/danmaku.ts')
-      },
       "/user/dynamic/:uid/:routeParams?": {
         "path": "/user/dynamic/:uid/:routeParams?",
         "categories": [
@@ -16252,7 +16252,7 @@ export default {
             {
               "name": "BILIBILI_COOKIE_*",
               "optional": true,
-              "description": "如果没有此配置，那么必须开启 puppeteer 支持；BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n2.  打开控制台，切换到 Network 面板，刷新\n3.  点击 dynamic_new 请求，找到 Cookie\n4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+              "description": "如果没有此配置，那么必须开启 Playwright 支持；BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n2.  打开控制台，切换到 Network 面板，刷新\n3.  点击 dynamic_new 请求，找到 Cookie\n4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
             }
           ],
           "requirePuppeteer": false,
@@ -17093,7 +17093,7 @@ export default {
             {
               "name": "BILIBILI_COOKIE_*",
               "optional": true,
-              "description": "如果没有此配置，那么必须开启 puppeteer 支持；BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n2.  打开控制台，切换到 Network 面板，刷新\n3.  点击 dynamic_new 请求，找到 Cookie\n4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
+              "description": "如果没有此配置，那么必须开启 Playwright 支持；BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：\n1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)\n2.  打开控制台，切换到 Network 面板，刷新\n3.  点击 dynamic_new 请求，找到 Cookie\n4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie"
             }
           ],
           "requirePuppeteer": false,
@@ -38198,7 +38198,7 @@ export default {
     "apiRoutes": {},
     "name": "抖音直播",
     "url": "douyin.com",
-    "description": "::: warning\n反爬严格，需要启用 puppeteer。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1.  启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2.  关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3.  点击原文链接打开抖音网页版的视频详情页播放视频。\n:::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
+    "description": "::: warning\n反爬严格，需要启用 Playwright。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1.  启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2.  关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3.  点击原文链接打开抖音网页版的视频详情页播放视频。\n:::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
     "lang": "zh-CN"
   },
   "douyu": {
@@ -52241,6 +52241,42 @@ export default {
         "location": "csrc/news.tsx",
         "module": () => import('@/routes/gov/csrc/news.tsx')
       },
+      "/customs/list/:gchannel?": {
+        "path": "/customs/list/:gchannel?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/customs/list/paimai",
+        "parameters": {
+          "gchannel": "支持 `paimai`, `fagui` 及 `latest` 3 个频道，默认为 `paimai`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.customs.gov.cn/"
+            ],
+            "target": "/customs/list"
+          }
+        ],
+        "name": "拍卖信息 / 海关法规 / 最新文件",
+        "maintainers": [
+          "Jeason0228",
+          "TonyRL",
+          "he1q"
+        ],
+        "url": "www.customs.gov.cn/",
+        "description": "::: warning\n由于区域限制，建议在国内 IP 的机器上自建\n:::",
+        "location": "customs/list.ts",
+        "module": () => import('@/routes/gov/customs/list.ts')
+      },
       "/forestry/gjlckjdjt/:category?": {
         "path": "/forestry/gjlckjdjt/:category?",
         "categories": [
@@ -52319,6 +52355,35 @@ export default {
         ],
         "location": "hainan/iitb/tzgg.ts",
         "module": () => import('@/routes/gov/hainan/iitb/tzgg.ts')
+      },
+      "/hangzhou/zwfw": {
+        "path": "/hangzhou/zwfw",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/hangzhou/zwfw",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hangzhou.gov.cn/col/col1256349/index.html"
+            ]
+          }
+        ],
+        "name": "政务服务公开",
+        "maintainers": [
+          "flynncao"
+        ],
+        "url": "hangzhou.gov.cn/col/col1256349/index.html",
+        "location": "hangzhou/zwfw.tsx",
+        "module": () => import('@/routes/gov/hangzhou/zwfw.tsx')
       },
       "/hebei/czt/xwdt/:category?": {
         "path": "/hebei/czt/xwdt/:category?",
@@ -54629,6 +54694,36 @@ export default {
         "location": "nsfc/index.ts",
         "module": () => import('@/routes/gov/nsfc/index.ts')
       },
+      "/pbc/goutongjiaoliu": {
+        "path": "/pbc/goutongjiaoliu",
+        "categories": [
+          "finance"
+        ],
+        "example": "/gov/pbc/goutongjiaoliu",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "pbc.gov.cn/goutongjiaoliu/113456/113469/index.html"
+            ]
+          }
+        ],
+        "name": "沟通交流",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "url": "pbc.gov.cn/goutongjiaoliu/113456/113469/index.html",
+        "location": "pbc/goutongjiaoliu.ts",
+        "module": () => import('@/routes/gov/pbc/goutongjiaoliu.ts')
+      },
       "/pbc/gzlw": {
         "path": "/pbc/gzlw",
         "categories": [
@@ -54658,6 +54753,28 @@ export default {
         "url": "pbc.gov.cn/redianzhuanti/118742/4122386/4122692/index.html",
         "location": "pbc/gzlw.ts",
         "module": () => import('@/routes/gov/pbc/gzlw.ts')
+      },
+      "/pbc/tradeAnnouncement": {
+        "path": "/pbc/tradeAnnouncement",
+        "categories": [
+          "finance"
+        ],
+        "example": "/gov/pbc/tradeAnnouncement",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "货币政策司公开市场交易公告",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "location": "pbc/trade-announcement.ts",
+        "module": () => import('@/routes/gov/pbc/trade-announcement.ts')
       },
       "/pbc/zcyj": {
         "path": "/pbc/zcyj",
@@ -55815,42 +55932,6 @@ export default {
         "location": "ccdi/index.ts",
         "module": () => import('@/routes/gov/ccdi/index.ts')
       },
-      "/customs/list/:gchannel?": {
-        "path": "/customs/list/:gchannel?",
-        "categories": [
-          "government"
-        ],
-        "example": "/gov/customs/list/paimai",
-        "parameters": {
-          "gchannel": "支持 `paimai`, `fagui` 及 `latest` 3 个频道，默认为 `paimai`"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.customs.gov.cn/"
-            ],
-            "target": "/customs/list"
-          }
-        ],
-        "name": "拍卖信息 / 海关法规 / 最新文件",
-        "maintainers": [
-          "Jeason0228",
-          "TonyRL",
-          "he1q"
-        ],
-        "url": "www.customs.gov.cn/",
-        "description": "::: warning\n由于区域限制，建议在国内 IP 的机器上自建\n:::",
-        "location": "customs/list.ts",
-        "module": () => import('@/routes/gov/customs/list.ts')
-      },
       "/dianbai/*": {
         "path": "/dianbai/*",
         "name": "Unknown",
@@ -55864,35 +55945,6 @@ export default {
         "maintainers": [],
         "location": "gaozhou/gaozhou.ts",
         "module": () => import('@/routes/gov/gaozhou/gaozhou.ts')
-      },
-      "/hangzhou/zwfw": {
-        "path": "/hangzhou/zwfw",
-        "categories": [
-          "government"
-        ],
-        "example": "/gov/hangzhou/zwfw",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "hangzhou.gov.cn/col/col1256349/index.html"
-            ]
-          }
-        ],
-        "name": "政务服务公开",
-        "maintainers": [
-          "flynncao"
-        ],
-        "url": "hangzhou.gov.cn/col/col1256349/index.html",
-        "location": "hangzhou/zwfw.tsx",
-        "module": () => import('@/routes/gov/hangzhou/zwfw.tsx')
       },
       "/huazhou/*": {
         "path": "/huazhou/*",
@@ -55921,58 +55973,6 @@ export default {
         "maintainers": [],
         "location": "mmht/mmht.ts",
         "module": () => import('@/routes/gov/mmht/mmht.ts')
-      },
-      "/pbc/goutongjiaoliu": {
-        "path": "/pbc/goutongjiaoliu",
-        "categories": [
-          "finance"
-        ],
-        "example": "/gov/pbc/goutongjiaoliu",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "pbc.gov.cn/goutongjiaoliu/113456/113469/index.html"
-            ]
-          }
-        ],
-        "name": "沟通交流",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "pbc.gov.cn/goutongjiaoliu/113456/113469/index.html",
-        "location": "pbc/goutongjiaoliu.ts",
-        "module": () => import('@/routes/gov/pbc/goutongjiaoliu.ts')
-      },
-      "/pbc/tradeAnnouncement": {
-        "path": "/pbc/tradeAnnouncement",
-        "categories": [
-          "finance"
-        ],
-        "example": "/gov/pbc/tradeAnnouncement",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "货币政策司公开市场交易公告",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "location": "pbc/trade-announcement.ts",
-        "module": () => import('@/routes/gov/pbc/trade-announcement.ts')
       },
       "/safe/business/:site?": {
         "path": "/safe/business/:site?",
@@ -75903,6 +75903,32 @@ export default {
         "location": "cn/index.ts",
         "module": () => import('@/routes/linkedin/cn/index.ts')
       },
+      "/company/:company_id/posts": {
+        "path": "/company/:company_id/posts",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/linkedin/company/google/posts",
+        "parameters": {
+          "company_id": "Company's LinkedIn profile ID"
+        },
+        "description": "Get company's LinkedIn posts by company ID",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportRadar": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Company Posts",
+        "maintainers": [
+          "saifazmi"
+        ],
+        "location": "posts.ts",
+        "module": () => import('@/routes/linkedin/posts.ts')
+      },
       "/jobs/:job_types/:exp_levels/:keywords?/:routeParams?": {
         "path": "/jobs/:job_types/:exp_levels/:keywords?/:routeParams?",
         "categories": [
@@ -75939,32 +75965,6 @@ export default {
         "description": "#### `job_types` list\n\n| Full Time | Part Time | Contractor | All |\n| --------- | --------- | ---------- | --- |\n| F         | P         | C          | all |\n\n#### `exp_levels` list\n\n| Intership | Entry Level | Associate | Mid-Senior Level | Director | All |\n| --------- | ----------- | --------- | ---------------- | -------- | --- |\n| 1         | 2           | 3         | 4                | 5        | all |\n\n#### `routeParams` additional query parameters\n\n##### `f_WT` list\n\n| Onsite | Remote | Hybrid |\n| ------ | ------- | ------ |\n|    1   |    2    |   3    |\n\n##### `geoId`\n\n  Geographic location ID. You can find this ID in the URL of a LinkedIn job search page that is filtered by location.\n\n  For example:\n  91000012 is the ID of East Asia.\n\n##### `f_TPR`\n\n  Time posted range. Here are some possible values:\n\n  *   `r86400`: Past 24 hours\n  *   `r604800`: Past week\n  *   `r2592000`: Past month\n\n  For example:\n\n  1.  If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`\n  2.  If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`\n  3.  If we want to search remote mid-senior level software engineer jobs in APAC posted within the last month, use `/linkedin/jobs/F/4/software%20engineer/f_WT=2&geoId=91000003&f_TPR=r2592000`\n\n  **To make it easier, the recommended way is to start a search on [LinkedIn](https://www.linkedin.com/jobs/search) and use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) to load the specific feed.**",
         "location": "jobs.ts",
         "module": () => import('@/routes/linkedin/jobs.ts')
-      },
-      "/company/:company_id/posts": {
-        "path": "/company/:company_id/posts",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/linkedin/company/google/posts",
-        "parameters": {
-          "company_id": "Company's LinkedIn profile ID"
-        },
-        "description": "Get company's LinkedIn posts by company ID",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportRadar": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Company Posts",
-        "maintainers": [
-          "saifazmi"
-        ],
-        "location": "posts.ts",
-        "module": () => import('@/routes/linkedin/posts.ts')
       }
     },
     "apiRoutes": {},
@@ -92298,45 +92298,6 @@ export default {
         "location": "daily-briefing-chinese.tsx",
         "module": () => import('@/routes/nytimes/daily-briefing-chinese.tsx')
       },
-      "/rss/:cat?": {
-        "path": "/rss/:cat?",
-        "categories": [
-          "traditional-media"
-        ],
-        "view": 0,
-        "example": "/nytimes/rss/HomePage",
-        "parameters": {
-          "cat": {
-            "description": "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url."
-          }
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "nytimes.com/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "News",
-        "maintainers": [
-          "HenryQW",
-          "pseudoyu",
-          "dzx-dzx"
-        ],
-        "url": "nytimes.com/",
-        "description": "Enhance the official EN RSS feed",
-        "location": "rss.ts",
-        "module": () => import('@/routes/nytimes/rss.ts')
-      },
       "/:lang?": {
         "path": "/:lang?",
         "categories": [
@@ -92392,6 +92353,45 @@ export default {
         "description": "By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.",
         "location": "index.ts",
         "module": () => import('@/routes/nytimes/index.ts')
+      },
+      "/rss/:cat?": {
+        "path": "/rss/:cat?",
+        "categories": [
+          "traditional-media"
+        ],
+        "view": 0,
+        "example": "/nytimes/rss/HomePage",
+        "parameters": {
+          "cat": {
+            "description": "Category name, corresponding to the last segment of [official feed's](https://www.nytimes.com/rss) url."
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "nytimes.com/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "HenryQW",
+          "pseudoyu",
+          "dzx-dzx"
+        ],
+        "url": "nytimes.com/",
+        "description": "Enhance the official EN RSS feed",
+        "location": "rss.ts",
+        "module": () => import('@/routes/nytimes/rss.ts')
       }
     },
     "apiRoutes": {},
@@ -97009,6 +97009,54 @@ export default {
   },
   "parliament.uk": {
     "routes": {
+      "/commonslibrary/type/:topic?": {
+        "path": "/commonslibrary/type/:topic?",
+        "categories": [
+          "government"
+        ],
+        "example": "/parliament.uk/commonslibrary/type/research-briefing",
+        "parameters": {
+          "topic": "research by topic, string, example: [research-briefing|data-dashboard]"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Commonlibrary",
+        "maintainers": [
+          "AntiKnot"
+        ],
+        "location": "commonslibrary.ts",
+        "module": () => import('@/routes/parliament.uk/commonslibrary.ts')
+      },
+      "/lordslibrary/type/:topic?": {
+        "path": "/lordslibrary/type/:topic?",
+        "categories": [
+          "government"
+        ],
+        "example": "/parliament.uk/lordslibrary/type/research-briefing",
+        "parameters": {
+          "topic": "research by topic, string, example: [research-briefing|buisness|economy]"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "House of Lords Library",
+        "maintainers": [
+          "AntiKnot"
+        ],
+        "location": "lordslibrary.ts",
+        "module": () => import('@/routes/parliament.uk/lordslibrary.ts')
+      },
       "/petitions/:state?": {
         "path": "/petitions/:state?",
         "name": "Petitions",
@@ -97113,54 +97161,6 @@ export default {
         "view": 0,
         "location": "petitions.tsx",
         "module": () => import('@/routes/parliament.uk/petitions.tsx')
-      },
-      "/commonslibrary/type/:topic?": {
-        "path": "/commonslibrary/type/:topic?",
-        "categories": [
-          "government"
-        ],
-        "example": "/parliament.uk/commonslibrary/type/research-briefing",
-        "parameters": {
-          "topic": "research by topic, string, example: [research-briefing|data-dashboard]"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Commonlibrary",
-        "maintainers": [
-          "AntiKnot"
-        ],
-        "location": "commonslibrary.ts",
-        "module": () => import('@/routes/parliament.uk/commonslibrary.ts')
-      },
-      "/lordslibrary/type/:topic?": {
-        "path": "/lordslibrary/type/:topic?",
-        "categories": [
-          "government"
-        ],
-        "example": "/parliament.uk/lordslibrary/type/research-briefing",
-        "parameters": {
-          "topic": "research by topic, string, example: [research-briefing|buisness|economy]"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "House of Lords Library",
-        "maintainers": [
-          "AntiKnot"
-        ],
-        "location": "lordslibrary.ts",
-        "module": () => import('@/routes/parliament.uk/lordslibrary.ts')
       }
     },
     "apiRoutes": {},
@@ -105833,38 +105833,6 @@ export default {
   },
   "science": {
     "routes": {
-      "/cover": {
-        "path": "/cover",
-        "categories": [
-          "journal"
-        ],
-        "example": "/science/cover",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "science.org/"
-            ]
-          }
-        ],
-        "name": "Cover Story",
-        "maintainers": [
-          "y9c",
-          "TonyRL"
-        ],
-        "url": "science.org/",
-        "description": "Subscribe to the cover images of Science journals, and get the latest publication updates in time.\n\n  Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.",
-        "location": "cover.tsx",
-        "module": () => import('@/routes/science/cover.tsx')
-      },
       "/blogs/:name?": {
         "path": "/blogs/:name?",
         "categories": [
@@ -105897,6 +105865,38 @@ export default {
         "description": "To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pipeline) or the [science editor's blog](https://science.org/blogs/editors-blog), use the name parameter `pipeline` or `editors-blog`.",
         "location": "blogs.ts",
         "module": () => import('@/routes/science/blogs.ts')
+      },
+      "/cover": {
+        "path": "/cover",
+        "categories": [
+          "journal"
+        ],
+        "example": "/science/cover",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "science.org/"
+            ]
+          }
+        ],
+        "name": "Cover Story",
+        "maintainers": [
+          "y9c",
+          "TonyRL"
+        ],
+        "url": "science.org/",
+        "description": "Subscribe to the cover images of Science journals, and get the latest publication updates in time.\n\n  Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.",
+        "location": "cover.tsx",
+        "module": () => import('@/routes/science/cover.tsx')
       },
       "/current/:journal?": {
         "path": "/current/:journal?",
@@ -126419,6 +126419,37 @@ export default {
   },
   "uestc": {
     "routes": {
+      "/auto": {
+        "path": "/auto",
+        "categories": [
+          "university"
+        ],
+        "example": "/uestc/auto",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "auto.uestc.edu.cn/"
+            ]
+          }
+        ],
+        "name": "自动化工程学院",
+        "maintainers": [
+          "talengu",
+          "mobyw"
+        ],
+        "url": "auto.uestc.edu.cn/",
+        "location": "auto.ts",
+        "module": () => import('@/routes/uestc/auto.ts')
+      },
       "/bbs/:types?": {
         "path": "/bbs/:types?",
         "name": "清水河畔",
@@ -126463,6 +126494,41 @@ export default {
         ],
         "location": "bbs.ts",
         "module": () => import('@/routes/uestc/bbs.ts')
+      },
+      "/cqe/:type?": {
+        "path": "/cqe/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/uestc/cqe/tzgg",
+        "parameters": {
+          "type": "默认为 `tzgg`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cqe.uestc.edu.cn/"
+            ],
+            "target": "/cqe"
+          }
+        ],
+        "name": "文化素质教育中心",
+        "maintainers": [
+          "truobel",
+          "mobyw"
+        ],
+        "url": "cqe.uestc.edu.cn/",
+        "description": "| 活动预告 | 通知公告 |\n| -------- | -------- |\n| hdyg     | tzgg     |",
+        "location": "cqe.ts",
+        "module": () => import('@/routes/uestc/cqe.ts')
       },
       "/gr/:type?": {
         "path": "/gr/:type?",
@@ -126567,72 +126633,6 @@ export default {
         "description": "| 学术    | 文化    | 公告         | 校内通知     |\n| ------- | ------- | ------------ | ------------ |\n| academy | culture | announcement | notification |",
         "location": "news.ts",
         "module": () => import('@/routes/uestc/news.ts')
-      },
-      "/auto": {
-        "path": "/auto",
-        "categories": [
-          "university"
-        ],
-        "example": "/uestc/auto",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "auto.uestc.edu.cn/"
-            ]
-          }
-        ],
-        "name": "自动化工程学院",
-        "maintainers": [
-          "talengu",
-          "mobyw"
-        ],
-        "url": "auto.uestc.edu.cn/",
-        "location": "auto.ts",
-        "module": () => import('@/routes/uestc/auto.ts')
-      },
-      "/cqe/:type?": {
-        "path": "/cqe/:type?",
-        "categories": [
-          "university"
-        ],
-        "example": "/uestc/cqe/tzgg",
-        "parameters": {
-          "type": "默认为 `tzgg`"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "cqe.uestc.edu.cn/"
-            ],
-            "target": "/cqe"
-          }
-        ],
-        "name": "文化素质教育中心",
-        "maintainers": [
-          "truobel",
-          "mobyw"
-        ],
-        "url": "cqe.uestc.edu.cn/",
-        "description": "| 活动预告 | 通知公告 |\n| -------- | -------- |\n| hdyg     | tzgg     |",
-        "location": "cqe.ts",
-        "module": () => import('@/routes/uestc/cqe.ts')
       },
       "/scse": {
         "path": "/scse",
@@ -130918,6 +130918,48 @@ export default {
   },
   "weibo": {
     "routes": {
+      "/search/hot/:fulltext?": {
+        "path": "/search/hot/:fulltext?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 1,
+        "example": "/weibo/search/hot",
+        "parameters": {
+          "fulltext": {
+            "description": "\n-   使用`/weibo/search/hot`可以获取热搜条目列表；\n-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；\n-   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）\n-   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）"
+          }
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "WEIBO_COOKIES",
+              "optional": true,
+              "description": ""
+            }
+          ],
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "s.weibo.com/top/summary"
+            ]
+          }
+        ],
+        "name": "热搜榜",
+        "maintainers": [
+          "xyqfer",
+          "shinemoon"
+        ],
+        "url": "s.weibo.com/top/summary",
+        "location": "search/hot.tsx",
+        "module": () => import('@/routes/weibo/search/hot.tsx')
+      },
       "/friends/:routeParams?": {
         "path": "/friends/:routeParams?",
         "categories": [
@@ -131057,48 +131099,6 @@ export default {
         ],
         "location": "oasis/user.ts",
         "module": () => import('@/routes/weibo/oasis/user.ts')
-      },
-      "/search/hot/:fulltext?": {
-        "path": "/search/hot/:fulltext?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 1,
-        "example": "/weibo/search/hot",
-        "parameters": {
-          "fulltext": {
-            "description": "\n-   使用`/weibo/search/hot`可以获取热搜条目列表；\n-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；\n-   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）\n-   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）"
-          }
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "WEIBO_COOKIES",
-              "optional": true,
-              "description": ""
-            }
-          ],
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "s.weibo.com/top/summary"
-            ]
-          }
-        ],
-        "name": "热搜榜",
-        "maintainers": [
-          "xyqfer",
-          "shinemoon"
-        ],
-        "url": "s.weibo.com/top/summary",
-        "location": "search/hot.tsx",
-        "module": () => import('@/routes/weibo/search/hot.tsx')
       },
       "/super_index/:id/:type?/:routeParams?": {
         "path": "/super_index/:id/:type?/:routeParams?",
@@ -134688,35 +134688,6 @@ export default {
         "location": "snb.ts",
         "module": () => import('@/routes/xueqiu/snb.ts')
       },
-      "/stock_comments/:id": {
-        "path": "/stock_comments/:id",
-        "categories": [
-          "finance"
-        ],
-        "example": "/xueqiu/stock_comments/SZ002626",
-        "parameters": {
-          "id": "股票代码（需要带上交易所）"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "xueqiu.com/S/:id"
-            ]
-          }
-        ],
-        "name": "股票评论",
-        "maintainers": [],
-        "location": "stock-comments.tsx",
-        "module": () => import('@/routes/xueqiu/stock-comments.tsx')
-      },
       "/favorite/:id": {
         "path": "/favorite/:id",
         "categories": [
@@ -134777,6 +134748,69 @@ export default {
         "url": "xueqiu.com/",
         "location": "hots.ts",
         "module": () => import('@/routes/xueqiu/hots.ts')
+      },
+      "/user/:id/:type?": {
+        "path": "/user/:id/:type?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/xueqiu/user/8152922548",
+        "parameters": {
+          "id": "用户 id, 可在用户主页 URL 中找到",
+          "type": "动态的类型, 不填则默认全部"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "xueqiu.com/u/:id"
+            ],
+            "target": "/user/:id"
+          }
+        ],
+        "name": "用户动态",
+        "maintainers": [
+          "imlonghao"
+        ],
+        "description": "| 原发布 | 长文 | 问答 | 热门 | 交易 |\n| ------ | ---- | ---- | ---- | ---- |\n| 0      | 2    | 4    | 9    | 11   |",
+        "location": "user.ts",
+        "module": () => import('@/routes/xueqiu/user.ts')
+      },
+      "/stock_comments/:id": {
+        "path": "/stock_comments/:id",
+        "categories": [
+          "finance"
+        ],
+        "example": "/xueqiu/stock_comments/SZ002626",
+        "parameters": {
+          "id": "股票代码（需要带上交易所）"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "xueqiu.com/S/:id"
+            ]
+          }
+        ],
+        "name": "股票评论",
+        "maintainers": [],
+        "location": "stock-comments.tsx",
+        "module": () => import('@/routes/xueqiu/stock-comments.tsx')
       },
       "/stock_info/:id/:type?": {
         "path": "/stock_info/:id/:type?",
@@ -134842,40 +134876,6 @@ export default {
         "url": "xueqiu.com/today",
         "location": "today.ts",
         "module": () => import('@/routes/xueqiu/today.ts')
-      },
-      "/user/:id/:type?": {
-        "path": "/user/:id/:type?",
-        "categories": [
-          "finance"
-        ],
-        "example": "/xueqiu/user/8152922548",
-        "parameters": {
-          "id": "用户 id, 可在用户主页 URL 中找到",
-          "type": "动态的类型, 不填则默认全部"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "xueqiu.com/u/:id"
-            ],
-            "target": "/user/:id"
-          }
-        ],
-        "name": "用户动态",
-        "maintainers": [
-          "imlonghao"
-        ],
-        "description": "| 原发布 | 长文 | 问答 | 热门 | 交易 |\n| ------ | ---- | ---- | ---- | ---- |\n| 0      | 2    | 4    | 9    | 11   |",
-        "location": "user.ts",
-        "module": () => import('@/routes/xueqiu/user.ts')
       }
     },
     "apiRoutes": {},
