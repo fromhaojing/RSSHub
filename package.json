@@ -91,7 +91,7 @@
         "header-generator": "2.1.82",
         "hono": "4.12.17",
         "html-to-text": "10.0.0",
-        "http-cookie-agent": "7.0.3",
+        "http-cookie-agent": "8.0.0",
         "https-proxy-agent": "9.0.0",
         "iconv-lite": "0.7.2",
         "imapflow": "1.3.3",
@@ -146,7 +146,7 @@
         "@bbob/types": "4.3.1",
         "@cloudflare/containers": "0.3.3",
         "@cloudflare/playwright": "1.3.0",
-        "@cloudflare/workers-types": "4.20260505.1",
+        "@cloudflare/workers-types": "4.20260506.1",
         "@eslint/eslintrc": "3.3.5",
         "@eslint/js": "10.0.1",
         "@oxlint/plugins": "1.62.0",
@@ -200,7 +200,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.1.5",
-        "wrangler": "4.87.0",
+        "wrangler": "4.88.0",
         "yaml-eslint-parser": "2.0.0"
     },
     "lint-staged": {
