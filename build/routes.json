@@ -43953,6 +43953,52 @@
     "url": "fishshell.com",
     "lang": "en"
   },
+  "fjdaily": {
+    "routes": {
+      "/:date?": {
+        "path": "/:date?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/fjdaily/20260316",
+        "parameters": {
+          "date": "日期，格式为 `YYYYMMDD`，留空时抓取当天全部版面，例如 `20260316`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "fjrb.fjdaily.com/pc/col/index.html"
+            ],
+            "target": "/"
+          },
+          {
+            "source": [
+              "fjrb.fjdaily.com/pc/col/:yearmonth/:day/node_:id.html"
+            ]
+          }
+        ],
+        "name": "电子报",
+        "maintainers": [
+          "DakoWang"
+        ],
+        "description": "留空时抓取最新一期全部版面，也可以通过日期参数抓取指定日期的全部版面内容。",
+        "location": "index.ts",
+        "module": "() => import('@/routes/fjdaily/index.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "福建日报",
+    "url": "fjdaily.com",
+    "lang": "zh-CN"
+  },
   "fjksbm": {
     "routes": {
       "/:category?": {
