@@ -71,7 +71,7 @@ describe('/bilibili/user/video/:uid', () => {
         waitForResponse.mockReset();
     });
 
-    it('falls back to browser mode by opening the user page before the video page', async () => {
+    it('falls back to browser mode by opening the video page and reading a single video list response', async () => {
         cacheMock.getCookie.mockRejectedValueOnce(new Error('cookie unavailable'));
         cacheMock.getConfiguredCookie.mockReturnValue(undefined);
         cacheMock.getUsernameAndFaceFromUID.mockResolvedValue(['雷军', 'https://example.com/face.jpg']);
@@ -118,7 +118,7 @@ describe('/bilibili/user/video/:uid', () => {
         const data = await route.handler(createContext());
 
         expect(getPlaywrightPage).toHaveBeenCalledWith(
-            'https://space.bilibili.com/646730844',
+            'https://space.bilibili.com/646730844/video',
             expect.objectContaining({
                 closeTimeout: 90000,
                 gotoConfig: { waitUntil: 'domcontentloaded' },
@@ -147,11 +147,40 @@ describe('/bilibili/user/video/:uid', () => {
                 }),
                 url: () => 'https://api.bilibili.com/x/space/wbi/arc/search',
             })
-        ).toBe(false);
-        expect(goto).toHaveBeenNthCalledWith(1, 'https://space.bilibili.com/646730844', { waitUntil: 'domcontentloaded' });
+        ).toBe(true);
+        expect(goto).toHaveBeenCalledTimes(1);
         expect(goto).toHaveBeenCalledWith('https://space.bilibili.com/646730844/video', { timeout: 45000, waitUntil: 'domcontentloaded' });
         expect(cacheMock.getCookie).toHaveBeenCalledTimes(1);
         expect(data.item).toHaveLength(1);
         expect(data.item[0].title).toBe('Video title');
+    });
+
+    it('throws when the single video list response returns 412', async () => {
+        cacheMock.getCookie.mockRejectedValueOnce(new Error('cookie unavailable'));
+        cacheMock.getConfiguredCookie.mockReturnValue(undefined);
+        waitForResponse.mockResolvedValue({
+            headers: () => ({ 'content-type': 'text/html' }),
+            request: () => ({
+                method: () => 'GET',
+                resourceType: () => 'fetch',
+            }),
+            status: () => 412,
+            url: () => 'https://api.bilibili.com/x/space/wbi/arc/search',
+        });
+        goto.mockResolvedValue(undefined);
+        getPlaywrightPage.mockImplementation(async (_url, options) => {
+            await options.onBeforeLoad?.(page);
+            return {
+                destroy,
+                page,
+            };
+        });
+
+        const { route } = await import('@/routes/bilibili/video');
+
+        await expect(route.handler(createContext())).rejects.toThrow('Bilibili browser mode returned unexpected video list API status 412');
+        expect(goto).toHaveBeenCalledTimes(1);
+        expect(waitForResponse).toHaveBeenCalledTimes(1);
+        expect(destroy).toHaveBeenCalledTimes(1);
     });
 });
