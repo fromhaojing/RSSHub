@@ -64519,6 +64519,39 @@ export default {
     },
     "lang": "zh-CN"
   },
+  "in-en": {
+    "routes": {
+      "/news/:type": {
+        "path": "/news/:type",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/in-en/news/solar",
+        "parameters": {
+          "type": "Channel type, see table below"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "新闻",
+        "maintainers": [
+          "Harviewang"
+        ],
+        "description": "| 频道 | type 参数 |\n| --- | --- |\n| 光伏太阳能 | solar |\n| 风电 | wind |\n| 储能 | chuneng |\n| 氢能 | h2 |\n| 充换电 | chd |\n| 新能源综合 | newenergy |\n| 电力 | power |\n| 环保 | huanbao |",
+        "location": "index.ts",
+        "module": () => import('@/routes/in-en/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "国际能源网",
+    "url": "www.in-en.com",
+    "lang": "zh-CN"
+  },
   "inceptionlabs": {
     "routes": {
       "/blog": {
