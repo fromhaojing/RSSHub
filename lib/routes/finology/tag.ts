@@ -19,6 +19,7 @@ export const route: Route = {
     handler,
     url: 'insider.finology.in/tag',
     description: `::: info Topic
+
 | Topic                    | Link                     |
 | ------------------------ | ------------------------ |
 | Investment Decisions     | investment-decisions     |
@@ -49,7 +50,7 @@ export const route: Route = {
 | World News               | world-news               |
 | Technology               | technology               |
 | Regulatory Bodies        | regulatory-bodies        |
-:::`,
+| :::                      |                          |`,
 };
 
 async function handler(ctx: Context) {
