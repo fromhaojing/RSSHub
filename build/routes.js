@@ -103543,16 +103543,16 @@ export default {
     "url": "qweather.com",
     "lang": "zh-CN"
   },
-  "qwenlm": {
+  "qwen": {
     "routes": {
       "/blog/:lang?": {
         "path": "/blog/:lang?",
         "categories": [
-          "blog"
+          "programming"
         ],
-        "example": "/qwenlm/blog/zh",
+        "example": "/qwen/blog",
         "parameters": {
-          "lang": "Blog language"
+          "lang": "语言，`zh-CN`, `en-US`"
         },
         "features": {
           "requireConfig": false,
@@ -103562,26 +103562,17 @@ export default {
           "supportPodcast": false,
           "supportScihub": false
         },
-        "radar": [
-          {
-            "source": [
-              "qwenlm.github.io/blog/",
-              "qwenlm.github.io/:lang/blog/"
-            ],
-            "target": "/qwenlm/blog/:lang"
-          }
-        ],
         "name": "Blog",
         "maintainers": [
           "Kjasn"
         ],
         "location": "blog.ts",
-        "module": () => import('@/routes/qwenlm/blog.ts')
+        "module": () => import('@/routes/qwen/blog.ts')
       }
     },
     "apiRoutes": {},
-    "name": "Qwen Blog",
-    "url": "qwenlm.github.io"
+    "name": "Qwen Research",
+    "url": "qwen.ai"
   },
   "qztc": {
     "routes": {
