@@ -1522,7 +1522,7 @@ export default {
           "EthanWng97"
         ],
         "url": "offer.1point3acres.com/",
-        "description": "::: tip 三个 id 获取方式\n\n1. 打开 <https://offer.1point3acres.com>\n2. 打开控制台\n3. 切换到 Network 面板\n4. 点击 搜索 按钮\n5. 点击 results?ps=15\\&pg=1 POST 请求\n6. 找到 Request Payload 请求参数，例如 `filters: {planyr: \"13\", planmajor: \"1\", outname_w: \"ACADIAU\"}` ，则三个 id 分别为: 13,1,ACADIAU\n\n:::",
+        "description": "::: tip 三个 id 获取方式\n\n1. 打开 <https://offer.1point3acres.com>\n2. 打开控制台\n3. 切换到 Network 面板\n4. 点击 搜索 按钮\n5. 点击 results?ps=15\\&pg=1 POST 请求\n6. 找到 Request Payload 请求参数，例如 `filters: {planyr: \"13\", planmajor: \"1\", outname_w: \"ACADIAU\"}` ，则三个 id 分别为: 13,1,ACADIAU\n   :::",
         "location": "offer.tsx",
         "module": () => import('@/routes/1point3acres/offer.tsx')
       },
@@ -15166,7 +15166,7 @@ export default {
         "categories": [
           "traditional-media"
         ],
-        "description": "Provides a better reading experience (full text articles) over the official ones.\n\nSupport major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.\n\n- Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.",
+        "description": "Provides a better reading experience (full text articles) over the official ones.\n\n```\nSupport major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.\n\n-   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.\n```",
         "location": "index.ts",
         "module": () => import('@/routes/bbc/index.ts')
       }
@@ -19674,7 +19674,7 @@ export default {
         "parameters": {
           "cddm": "菜单代码，可以是 2 位或者 4 位，默认为 `02`（通知公告）"
         },
-        "description": "::: tip\n\n菜单代码（`cddm`）应填写链接中调用的 newsList 接口的参数，可以是 2 位或者 4 位数字。若为 2 位，则为 `fcd`（父菜单）；若为 4 位，则为 `cddm`（菜单代码），其中前 2 位为 `fcd`。\n示例：\n\n1. 新闻快讯页面的链接中 `onclick=\"javascript:onNewsList('03');return false;\"`，对应的路径参数为 `03`，完整路由为 `/buaa/jiaowu/03`；\n2. 通知公告 > 公示专区页面的链接中 `onclick=\"javascript:onNewsList2('0203','2');return false;\"`，对应的路径参数为 `0203`，完整路由为 `/buaa/jiaowu/0203`。\n\n:::",
+        "description": "::: tip\n\n菜单代码（`cddm`）应填写链接中调用的 newsList 接口的参数，可以是 2 位或者 4 位数字。若为 2 位，则为 `fcd`（父菜单）；若为 4 位，则为 `cddm`（菜单代码），其中前 2 位为 `fcd`。\n示例：\n\n1. 新闻快讯页面的链接中 `onclick=\"javascript:onNewsList('03');return false;\"`，对应的路径参数为 `03`，完整路由为 `/buaa/jiaowu/03`；\n2. 通知公告 > 公示专区页面的链接中 `onclick=\"javascript:onNewsList2('0203','2');return false;\"`，对应的路径参数为 `0203`，完整路由为 `/buaa/jiaowu/0203`。\n   :::",
         "categories": [
           "university"
         ],
@@ -21843,7 +21843,7 @@ export default {
           }
         ],
         "name": "Channels",
-        "description": "Get the channel from the Castbox channel URL. For example, the URL of the channel \"Lemonade Stand\" is `https://castbox.fm/channel/Lemonade-Stand-id6776228`, where `Lemonade-Stand-id6776228` is the `channel` parameter.\n\nYou can use the RSSHub global `limit` query parameter to specify the maximum number of episodes to fetch from the Castbox API (defaults to 50). For example: `/castbox/channel/Lemonade-Stand-id6776228?limit=100`.",
+        "description": "Get the channel from the Castbox channel URL. For example, the URL of the channel \"Lemonade Stand\" is `https://castbox.fm/channel/Lemonade-Stand-id6776228`, where `Lemonade-Stand-id6776228` is the `channel` parameter.\n\n```\nYou can use the RSSHub global `limit` query parameter to specify the maximum number of episodes to fetch from the Castbox API (defaults to 50). For example: `/castbox/channel/Lemonade-Stand-id6776228?limit=100`.\n```",
         "maintainers": [
           "ananyatimalsina"
         ],
@@ -25627,7 +25627,7 @@ export default {
         "maintainers": [
           "TonyRL"
         ],
-        "description": "<details>\n<summary>市场公告</summary>\n\n外汇市场公告\n\n| 最新 | 市场公告通知 | 中心会员公告 | 会员信息公告 |\n| ---- | ------------ | ------------ | ------------ |\n| 2834 | 2835         | 2836         | 2837         |\n\n本币市场公告\n\n| 最新           | 市场公告通知 | 中心会员公告 | 会员信息公告 |\n| -------------- | ------------ | ------------ | ------------ |\n| 2839,2840,2841 | 2839         | 2840         | 2841         |\n\n央行业务公告\n\n| 最新      | 公开市场操作 | 中央国库现金管理 |\n| --------- | ------------ | ---------------- |\n| 2845,2846 | 2845         | 2846             |\n\n</details>\n\n<details>\n<summary>本币市场</summary>\n\n贷款市场报价利率\n\n| LPR 市场公告 |\n| ------------ |\n| 3686         |\n\n</details>",
+        "description": "<details>\n<summary>市场公告</summary>\n\n```\n外汇市场公告\n```\n\n| 最新 | 市场公告通知 | 中心会员公告 | 会员信息公告 |\n| ---- | ------------ | ------------ | ------------ |\n| 2834 | 2835         | 2836         | 2837         |\n\n```\n本币市场公告\n```\n\n| 最新           | 市场公告通知 | 中心会员公告 | 会员信息公告 |\n| -------------- | ------------ | ------------ | ------------ |\n| 2839,2840,2841 | 2839         | 2840         | 2841         |\n\n```\n央行业务公告\n```\n\n| 最新      | 公开市场操作 | 中央国库现金管理 |\n| --------- | ------------ | ---------------- |\n| 2845,2846 | 2845         | 2846             |\n\n</details>\n\n<details>\n<summary>本币市场</summary>\n\n```\n贷款市场报价利率\n```\n\n| LPR 市场公告 |\n| ------------ |\n| 3686         |\n\n</details>",
         "location": "notice.ts",
         "module": () => import('@/routes/chinamoney/notice.ts')
       }
@@ -33695,7 +33695,7 @@ export default {
     "apiRoutes": {},
     "name": "DeadbyDaylight",
     "url": "deadbydaylight.com",
-    "description": "DeadbyDaylight Official",
+    "description": "```\n  DeadbyDaylight Official\n```",
     "zh": {
       "name": "黎明杀机"
     },
@@ -34668,7 +34668,7 @@ export default {
           "language": "语言，默认为中文，即 CN，可在对应分类页 URL 中找到，可选 CN 和 EN",
           "category": "分类，默认为专业文章，即 paper，可在对应分类页 URL 中找到"
         },
-        "description": "::: tip\n若订阅 [专业文章](https://dehenglaw.com/)，网址为 `https://www.dehenglaw.com/CN/paper/0008/000902.aspx`。截取 `https://dehenglaw.com/` 到末尾 `/0008/000902.aspx` 的部分 `CN/paper` 作为参数填入，此时路由为 [`/dehenglaw/CN/paper`](https://rsshub.app/dehenglaw/CN/paper)。\n\n| 专业文章 | 出版物  | 德恒论坛 |\n| -------- | ------- | -------- |\n| paper    | publish | luntan   |\n\n:::",
+        "description": "::: tip\n若订阅 [专业文章](https://dehenglaw.com/)，网址为 `https://www.dehenglaw.com/CN/paper/0008/000902.aspx`。截取 `https://dehenglaw.com/` 到末尾 `/0008/000902.aspx` 的部分 `CN/paper` 作为参数填入，此时路由为 [`/dehenglaw/CN/paper`](https://rsshub.app/dehenglaw/CN/paper)。\n\n| 专业文章 | 出版物  | 德恒论坛 |\n| -------- | ------- | -------- |\n| paper    | publish | luntan   |\n| :::      |         |          |",
         "categories": [
           "new-media"
         ],
@@ -37220,7 +37220,7 @@ export default {
     "categories": [
       "sport"
     ],
-    "description": "::: tip\n\n- 可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。\n\n:::",
+    "description": "::: tip\n\n- 可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。\n  :::",
     "lang": "zh-CN"
   },
   "dora-world": {
@@ -37320,7 +37320,7 @@ export default {
         "maintainers": [
           "alfredcai"
         ],
-        "description": "::: tip\n\n- **目前只支持整数型 id**\n- 字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则`ul[userid]-*.jpg`或`u[userid]-*.jpg`，即取文件名中间的数字\n- 例如：用户 id: `MovieL`他的头像图片链接：`https://img1.doubanio.com/icon/ul1128221-98.jpg`他的整数型 id: `1128221`\n\n:::\n\n对于豆瓣用户广播内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式\n\n| 键                         | 含义                                                           | 接受的值       | 默认值 |\n| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |\n| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |\n| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |\n| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |\n| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |\n| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |\n| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |\n| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |\n| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |\n| showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |\n| showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |\n| widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |\n\n指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如\n\n<https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100>\n\n的效果为\n\n  <img loading=\"lazy\" src=\"/img/readable-douban.png\" alt=\"豆瓣读书的可读豆瓣广播 RSS\" />",
+        "description": "::: tip\n\n- **目前只支持整数型 id**\n- 字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则`ul[userid]-*.jpg`或`u[userid]-*.jpg`，即取文件名中间的数字\n- 例如：用户 id: `MovieL`他的头像图片链接：`https://img1.doubanio.com/icon/ul1128221-98.jpg`他的整数型 id: `1128221`\n  :::\n\n对于豆瓣用户广播内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式\n\n| 键                         | 含义                                                           | 接受的值       | 默认值 |\n| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |\n| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |\n| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |\n| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |\n| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |\n| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |\n| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |\n| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |\n| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |\n| showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |\n| showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |\n| widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |\n\n指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如\n\n<https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100>\n\n的效果为\n\n  <img loading=\"lazy\" src=\"/img/readable-douban.png\" alt=\"豆瓣读书的可读豆瓣广播 RSS\" />",
         "location": "people/status.ts",
         "module": () => import('@/routes/douban/people/status.ts')
       },
@@ -38198,7 +38198,7 @@ export default {
     "apiRoutes": {},
     "name": "抖音直播",
     "url": "douyin.com",
-    "description": "::: warning\n反爬严格，需要启用 Playwright。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1. 启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2. 关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3. 点击原文链接打开抖音网页版的视频详情页播放视频。\n\n:::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
+    "description": "::: warning\n反爬严格，需要启用 Playwright。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1. 启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2. 关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3. 点击原文链接打开抖音网页版的视频详情页播放视频。\n   :::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
     "lang": "zh-CN"
   },
   "douyu": {
@@ -43643,7 +43643,7 @@ export default {
         "maintainers": [
           "Rjnishant530"
         ],
-        "description": "::: info Category\n\n| Category              | Link               |\n| --------------------- | ------------------ |\n| **Business**          | business           |\n| Big Shots             | entrepreneurship   |\n| Startups              | startups-india     |\n| Brand Games           | success-stories    |\n| Juicy Scams           | juicy-scams        |\n| **Finance**           | finance            |\n| Macro Moves           | economy            |\n| News Platter          | market-news        |\n| Tax Club              | tax                |\n| Your Money            | your-money         |\n| **Invest**            | investing          |\n| Stock Market          | stock-market       |\n| Financial Ratios      | stock-ratios       |\n| Investor's Psychology | behavioral-finance |\n| Mutual Funds          | mutual-fund        |\n\n:::",
+        "description": "::: info Category\n\n| Category              | Link               |\n| --------------------- | ------------------ |\n| **Business**          | business           |\n| Big Shots             | entrepreneurship   |\n| Startups              | startups-india     |\n| Brand Games           | success-stories    |\n| Juicy Scams           | juicy-scams        |\n| **Finance**           | finance            |\n| Macro Moves           | economy            |\n| News Platter          | market-news        |\n| Tax Club              | tax                |\n| Your Money            | your-money         |\n| **Invest**            | investing          |\n| Stock Market          | stock-market       |\n| Financial Ratios      | stock-ratios       |\n| Investor's Psychology | behavioral-finance |\n| Mutual Funds          | mutual-fund        |\n| :::                   |                    |",
         "location": "category.ts",
         "module": () => import('@/routes/finology/category.ts')
       },
@@ -43690,7 +43690,7 @@ export default {
           "Rjnishant530"
         ],
         "url": "insider.finology.in/tag",
-        "description": "::: info Topic\n\n| Topic                    | Link                     |\n| ------------------------ | ------------------------ |\n| Investment Decisions     | investment-decisions     |\n| Investing 101            | investing-101            |\n| Stock Markets            | stock-markets            |\n| business news india      | business-news-india      |\n| Company Analysis         | company-analysis         |\n| Business and brand tales | business-and-brand-tales |\n| Featured                 | featured                 |\n| Fundamental Analysis     | fundamental-analysis     |\n| Business Story           | business-story           |\n| All Biz                  | all-biz                  |\n| Stock Analysis           | stock-analysis           |\n| Automobile Industry      | automobile-industry      |\n| Indian Economy           | indian-economy           |\n| Govt's Words             | govt%27s-words           |\n| Behavioral Finance       | behavioral-finance       |\n| Global Economy           | global-economy           |\n| Startups                 | startups                 |\n| GST                      | gst                      |\n| Product Review           | product-review           |\n| My Pocket                | my-pocket                |\n| Business Games           | business-games           |\n| Business Models          | business-models          |\n| Indian Indices           | indian-indices           |\n| Banking System           | banking-system           |\n| Debt                     | debt                     |\n| World News               | world-news               |\n| Technology               | technology               |\n| Regulatory Bodies        | regulatory-bodies        |\n\n:::",
+        "description": "::: info Topic\n\n| Topic                    | Link                     |\n| ------------------------ | ------------------------ |\n| Investment Decisions     | investment-decisions     |\n| Investing 101            | investing-101            |\n| Stock Markets            | stock-markets            |\n| business news india      | business-news-india      |\n| Company Analysis         | company-analysis         |\n| Business and brand tales | business-and-brand-tales |\n| Featured                 | featured                 |\n| Fundamental Analysis     | fundamental-analysis     |\n| Business Story           | business-story           |\n| All Biz                  | all-biz                  |\n| Stock Analysis           | stock-analysis           |\n| Automobile Industry      | automobile-industry      |\n| Indian Economy           | indian-economy           |\n| Govt's Words             | govt%27s-words           |\n| Behavioral Finance       | behavioral-finance       |\n| Global Economy           | global-economy           |\n| Startups                 | startups                 |\n| GST                      | gst                      |\n| Product Review           | product-review           |\n| My Pocket                | my-pocket                |\n| Business Games           | business-games           |\n| Business Models          | business-models          |\n| Indian Indices           | indian-indices           |\n| Banking System           | banking-system           |\n| Debt                     | debt                     |\n| World News               | world-news               |\n| Technology               | technology               |\n| Regulatory Bodies        | regulatory-bodies        |\n| :::                      |                          |",
         "location": "tag.ts",
         "module": () => import('@/routes/finology/tag.ts')
       }
@@ -45101,7 +45101,7 @@ export default {
         "maintainers": [
           "HenryQW"
         ],
-        "description": "::: tip\n\n- Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)\n- Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`\n\n:::",
+        "description": "::: tip\n\n- Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)\n- Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`\n  :::",
         "location": "myft.ts",
         "module": () => import('@/routes/ft/myft.ts')
       }
@@ -45136,7 +45136,7 @@ export default {
           "HenryQW",
           "xyqfer"
         ],
-        "description": "::: tip\n\n- 不支持付费文章。\n\n:::\n\n通过提取文章全文，以提供比官方源更佳的阅读体验。\n\n支持所有频道，频道名称见 [官方频道 RSS](http://www.ftchinese.com/channel/rss.html).\n\n- 频道为单一路径，如 `http://www.ftchinese.com/rss/news` 则为 `/ftchinese/simplified/news`.\n- 频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ftchinese/simplified/column-007000002`.",
+        "description": "::: tip\n\n- 不支持付费文章。\n  :::\n\n通过提取文章全文，以提供比官方源更佳的阅读体验。\n\n支持所有频道，频道名称见 [官方频道 RSS](http://www.ftchinese.com/channel/rss.html).\n\n- 频道为单一路径，如 `http://www.ftchinese.com/rss/news` 则为 `/ftchinese/simplified/news`.\n- 频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ftchinese/simplified/column-007000002`.",
         "location": "channel.ts",
         "module": () => import('@/routes/ftchinese/channel.ts')
       }
@@ -49876,7 +49876,7 @@ export default {
     "apiRoutes": {},
     "name": "GitHub",
     "url": "github.com",
-    "description": "::: tip\nGitHub provides some official RSS feeds:\n\n- Repo releases: `https://github.com/:owner/:repo/releases.atom`\n- Repo commits: `https://github.com/:owner/:repo/commits.atom`\n- User activities: `https://github.com/:user.atom`\n- Private feed: `https://github.com/:user.private.atom?token=:secret` (Note: You can ONLY obtain this url via an [API](https://docs.github.com/en/rest/activity/feeds?apiVersion=2022-11-28) call with a [Personal Access Token](https://github.com/settings/tokens/new) with **ENOUGH** scopes now.)\n- Wiki history: `https://github.com/:owner/:repo/wiki.atom`\n\n:::",
+    "description": "::: tip\nGitHub provides some official RSS feeds:\n\n- Repo releases: `https://github.com/:owner/:repo/releases.atom`\n- Repo commits: `https://github.com/:owner/:repo/commits.atom`\n- User activities: `https://github.com/:user.atom`\n- Private feed: `https://github.com/:user.private.atom?token=:secret` (Note: You can ONLY obtain this url via an [API](https://docs.github.com/en/rest/activity/feeds?apiVersion=2022-11-28) call with a [Personal Access Token](https://github.com/settings/tokens/new) with **ENOUGH** scopes now.)\n- Wiki history: `https://github.com/:owner/:repo/wiki.atom`\n  :::",
     "lang": "en"
   },
   "gitkraken": {
@@ -63909,7 +63909,7 @@ export default {
         "maintainers": [
           "EthanWng97"
         ],
-        "description": "::: warning\n\n1. Open <https://ifi-audio.com/download-hub> and the Network panel\n2. Select the device and the corresponding serial number in the website and click Search\n3. Find the last request named `https://ifi-audio.com/wp-admin/admin-ajax.php` in the Network panel, find out the val and id in the Payload panel, and fill in the url\n\n:::",
+        "description": "::: warning\n\n1. Open <https://ifi-audio.com/download-hub> and the Network panel\n2. Select the device and the corresponding serial number in the website and click Search\n3. Find the last request named `https://ifi-audio.com/wp-admin/admin-ajax.php` in the Network panel, find out the val and id in the Payload panel, and fill in the url\n   :::",
         "location": "download.ts",
         "module": () => import('@/routes/ifi-audio/download.ts')
       }
@@ -64779,7 +64779,7 @@ export default {
         "maintainers": [
           "TonyRL"
         ],
-        "description": "<details>\n<summary>专题 ID</summary>\n\n游戏推荐\n\n| itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |\n| --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |\n| 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |\n\n游戏评论\n\n| 游必有方 Podcast | 独立游戏潮（RED） |\n| ---------------- | ----------------- |\n| 6                | 3                 |\n\n游戏开发\n\n| 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |\n| ------------ | -------------- | ------------ |\n| 15           | 14             | 7            |\n\n游戏设计\n\n| 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |\n| ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |\n| 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |\n\n游戏文化\n\n| NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |\n| --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |\n| 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |\n\nGame Jam\n\n| Ludum Dare | Global Game Jam |\n| ---------- | --------------- |\n| 31         | 13              |\n\n</details>",
+        "description": "<details>\n<summary>专题 ID</summary>\n\n```\n游戏推荐\n```\n\n| itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |\n| --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |\n| 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |\n\n```\n游戏评论\n```\n\n| 游必有方 Podcast | 独立游戏潮（RED） |\n| ---------------- | ----------------- |\n| 6                | 3                 |\n\n```\n游戏开发\n```\n\n| 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |\n| ------------ | -------------- | ------------ |\n| 15           | 14             | 7            |\n\n```\n游戏设计\n```\n\n| 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |\n| ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |\n| 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |\n\n```\n游戏文化\n```\n\n| NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |\n| --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |\n| 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |\n\n```\nGame Jam\n```\n\n| Ludum Dare | Global Game Jam |\n| ---------- | --------------- |\n| 31         | 13              |\n\n</details>",
         "location": "column.ts",
         "module": () => import('@/routes/indienova/column.ts')
       },
@@ -67358,7 +67358,7 @@ export default {
     "apiRoutes": {},
     "name": "JavBus",
     "url": "www.javbus.com",
-    "description": "::: warning\nRequests from non-Asia areas will be redirected to login page.\n:::\n\n::: tip Language\nYou can change the language of each route to the languages listed below.\n\n| English | 日本语 | 한국의 | 中文             |\n| ------- | ------ | ------ | ---------------- |\n| en      | ja     | ko     | (leave it empty) |\n\n:::\n\n::: tip\nJavBus has multiple backup domains, these routes use default domain `https://javbus.com`. If the domain is unreachable, you can add `?domain=<domain>` to the end of the route to specify the domain to visit. Let say you want to use the backup domain `https://javsee.icu`, you can add `?domain=javsee.icu` to the end of the route, then the route will be [`/javbus/en?domain=javsee.icu`](https://rsshub.app/javbus?domain=javsee.icu)\n\n**Note**: **Western** has different domain than the main site, the backup domains are also different. The default domain is `https://javbus.org` and you can add `?western_domain=<domain>` to the end of the route to specify the domain to visit. Let say you want to use the backup domain `https://javsee.one`, you can add `?western_domain=javsee.one` to the end of the route, then the route will be [`/javbus/western/en?western_domain=javsee.one`](https://rsshub.app/javbus/western?western_domain=javsee.one)\n:::",
+    "description": "::: warning\nRequests from non-Asia areas will be redirected to login page.\n:::\n\n::: tip Language\nYou can change the language of each route to the languages listed below.\n\n| English | 日本语 | 한국의 | 中文             |\n| ------- | ------ | ------ | ---------------- |\n| en      | ja     | ko     | (leave it empty) |\n| :::     |        |        |                  |\n\n::: tip\nJavBus has multiple backup domains, these routes use default domain `https://javbus.com`. If the domain is unreachable, you can add `?domain=<domain>` to the end of the route to specify the domain to visit. Let say you want to use the backup domain `https://javsee.icu`, you can add `?domain=javsee.icu` to the end of the route, then the route will be [`/javbus/en?domain=javsee.icu`](https://rsshub.app/javbus?domain=javsee.icu)\n\n**Note**: **Western** has different domain than the main site, the backup domains are also different. The default domain is `https://javbus.org` and you can add `?western_domain=<domain>` to the end of the route to specify the domain to visit. Let say you want to use the backup domain `https://javsee.one`, you can add `?western_domain=javsee.one` to the end of the route, then the route will be [`/javbus/western/en?western_domain=javsee.one`](https://rsshub.app/javbus/western?western_domain=javsee.one)\n:::",
     "lang": "en"
   },
   "javdb": {
@@ -73179,7 +73179,7 @@ export default {
           "nczitzk",
           "AiraNadih"
         ],
-        "description": "Sources\n\n| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |\n| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |\n| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |\n\n::: tip\nWhen `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\nThere is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.\n\nSupport for announcements and fancards:\n\n- Use `/:source/:id/announcements` to get announcements\n- Use `/:source/:id/fancards` to get fancards\n\n:::",
+        "description": "Sources\n\n| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |\n| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |\n| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |\n\n::: tip\nWhen `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\nThere is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.\n\nSupport for announcements and fancards:\n\n- Use `/:source/:id/announcements` to get announcements\n- Use `/:source/:id/fancards` to get fancards\n  :::",
         "location": "index.tsx",
         "module": () => import('@/routes/kemono/index.tsx')
       }
@@ -74184,7 +74184,7 @@ export default {
         "maintainers": [
           "NeverBehave"
         ],
-        "description": "快递公司代号如果不能确定，可通过下方快递列表获得。\n\n::: warning\n\n1. 构造链接前请确认所有参数正确：错误`快递公司 - 订单号`组合将会缓存信息一小段时间防止产生无用查询\n2. 正常查询的订单在未签收状态下不会被缓存：请控制查询频率\n3. 订单完成后请尽快取消订阅，避免资源浪费\n\n:::",
+        "description": "快递公司代号如果不能确定，可通过下方快递列表获得。\n\n::: warning\n\n1. 构造链接前请确认所有参数正确：错误`快递公司 - 订单号`组合将会缓存信息一小段时间防止产生无用查询\n2. 正常查询的订单在未签收状态下不会被缓存：请控制查询频率\n3. 订单完成后请尽快取消订阅，避免资源浪费\n   :::",
         "location": "index.ts",
         "module": () => import('@/routes/kuaidi100/index.ts')
       },
@@ -76965,7 +76965,7 @@ export default {
         "parameters": {
           "category": "Category, Homepage by default"
         },
-        "description": "::: tip\nIf you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is `https://lrepacks.net/repaki-sistemnyh-programm/`, extract the part `https://lrepacks.net/` to the end, which is `repaki-sistemnyh-programm`, and use it as the parameter to fill in. Therefore, the route will be [`/lrepacks/repaki-sistemnyh-programm`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).\n\n| Category                                                                        | ID                                                                                           |\n| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |\n| [Новые репаки на сегодня](https://lrepacks.net/novye-repaki-elchupacabra/)      | [novye-repaki-elchupacabra](https://rsshub.app/lrepacks/novye-repaki-elchupacabra)           |\n| [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)          | [repaki-sistemnyh-programm](https://rsshub.app/lrepacks/repaki-sistemnyh-programm)           |\n| [Программы для графики](https://lrepacks.net/repaki-programm-dlya-grafiki/)     | [repaki-programm-dlya-grafiki](https://rsshub.app/lrepacks/repaki-programm-dlya-grafiki)     |\n| [Программы для интернета](https://lrepacks.net/repaki-programm-dlya-interneta/) | [repaki-programm-dlya-interneta](https://rsshub.app/lrepacks/repaki-programm-dlya-interneta) |\n| [Мультимедиа программы](https://lrepacks.net/repaki-multimedia-programm/)       | [repaki-multimedia-programm](https://rsshub.app/lrepacks/repaki-multimedia-programm)         |\n| [Программы для офиса](https://lrepacks.net/repaki-programm-dlya-ofisa/)         | [repaki-programm-dlya-ofisa](https://rsshub.app/lrepacks/repaki-programm-dlya-ofisa)         |\n| [Разные программы](https://lrepacks.net/repaki-raznyh-programm/)                | [repaki-raznyh-programm](https://rsshub.app/lrepacks/repaki-raznyh-programm)                 |\n| [Системные библиотеки](https://lrepacks.net/sistemnye-biblioteki/)              | [sistemnye-biblioteki](https://rsshub.app/lrepacks/sistemnye-biblioteki)                     |\n| [Важная информация](https://lrepacks.net/informaciya/)                          | [informaciya](https://rsshub.app/lrepacks/informaciya)                                       |\n\n:::",
+        "description": "::: tip\nIf you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is `https://lrepacks.net/repaki-sistemnyh-programm/`, extract the part `https://lrepacks.net/` to the end, which is `repaki-sistemnyh-programm`, and use it as the parameter to fill in. Therefore, the route will be [`/lrepacks/repaki-sistemnyh-programm`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).\n\n| Category                                                                        | ID                                                                                           |\n| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |\n| [Новые репаки на сегодня](https://lrepacks.net/novye-repaki-elchupacabra/)      | [novye-repaki-elchupacabra](https://rsshub.app/lrepacks/novye-repaki-elchupacabra)           |\n| [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)          | [repaki-sistemnyh-programm](https://rsshub.app/lrepacks/repaki-sistemnyh-programm)           |\n| [Программы для графики](https://lrepacks.net/repaki-programm-dlya-grafiki/)     | [repaki-programm-dlya-grafiki](https://rsshub.app/lrepacks/repaki-programm-dlya-grafiki)     |\n| [Программы для интернета](https://lrepacks.net/repaki-programm-dlya-interneta/) | [repaki-programm-dlya-interneta](https://rsshub.app/lrepacks/repaki-programm-dlya-interneta) |\n| [Мультимедиа программы](https://lrepacks.net/repaki-multimedia-programm/)       | [repaki-multimedia-programm](https://rsshub.app/lrepacks/repaki-multimedia-programm)         |\n| [Программы для офиса](https://lrepacks.net/repaki-programm-dlya-ofisa/)         | [repaki-programm-dlya-ofisa](https://rsshub.app/lrepacks/repaki-programm-dlya-ofisa)         |\n| [Разные программы](https://lrepacks.net/repaki-raznyh-programm/)                | [repaki-raznyh-programm](https://rsshub.app/lrepacks/repaki-raznyh-programm)                 |\n| [Системные библиотеки](https://lrepacks.net/sistemnye-biblioteki/)              | [sistemnye-biblioteki](https://rsshub.app/lrepacks/sistemnye-biblioteki)                     |\n| [Важная информация](https://lrepacks.net/informaciya/)                          | [informaciya](https://rsshub.app/lrepacks/informaciya)                                       |\n| :::                                                                             |                                                                                              |",
         "categories": [
           "program-update"
         ],
@@ -81768,7 +81768,7 @@ export default {
           "Tsuyumi25"
         ],
         "url": "jp.mercari.com",
-        "description": "::: warning\n此路由僅支援 `jp.mercari.com`，不支援 `tw.mercari.com` 和 `hk.mercari.com`。\n\n**注意：** 不同站點的查詢參數格式不同\n\n- 日本: `keyword=シャツ&order=desc&sort=created_time&status=on_sale`\n- 台灣: `keyword=シャツ&sort=new&status=in-stock&availability=1`\n\n:::",
+        "description": "::: warning\n此路由僅支援 `jp.mercari.com`，不支援 `tw.mercari.com` 和 `hk.mercari.com`。\n\n**注意：** 不同站點的查詢參數格式不同\n\n- 日本: `keyword=シャツ&order=desc&sort=created_time&status=on_sale`\n- 台灣: `keyword=シャツ&sort=new&status=in-stock&availability=1`\n  :::",
         "location": "search.ts",
         "module": () => import('@/routes/mercari/search.ts')
       }
@@ -88454,7 +88454,7 @@ export default {
         "categories": [
           "multimedia"
         ],
-        "description": "::: tip\n**如何获取电台 ID？**\n打开蔚来 APP 后，点击 “此地”→“NIO Radio”，找到自己想要转换为播客的专辑，分享后在生成的链接中找到`container_id=`后方的数字即可。\n常见电台 ID：\n\n| 电台名称             | 电台 ID |\n| :------------------- | :------ |\n| 资讯充电站（早间版） | 5       |\n| 资讯充电站（晚间版） | 23      |\n| E 次元财经报         | 148     |\n| 塞萌不塞车           | 661     |\n| 乐行记               | 11      |\n| Weekend Dance        | 547     |\n\n:::",
+        "description": "::: tip\n**如何获取电台 ID？**\n打开蔚来 APP 后，点击 “此地”→“NIO Radio”，找到自己想要转换为播客的专辑，分享后在生成的链接中找到`container_id=`后方的数字即可。\n常见电台 ID：\n\n| 电台名称             | 电台 ID |\n| :------------------- | :------ |\n| 资讯充电站（早间版） | 5       |\n| 资讯充电站（晚间版） | 23      |\n| E 次元财经报         | 148     |\n| 塞萌不塞车           | 661     |\n| 乐行记               | 11      |\n| Weekend Dance        | 547     |\n| :::                  |         |",
         "example": "/nio/nioradio/5",
         "parameters": {
           "albumid": "电台专辑 ID"
@@ -92139,7 +92139,7 @@ export default {
     "apiRoutes": {},
     "name": "Nyaa",
     "url": "nyaa.si",
-    "description": "::: tip\nThe 'Nyaa' includes several routes to access different parts of the site:\n\n1. `/nyaa/search/:query?` - Use this route to search for content with a specific query. For example, `/nyaa/search/bocchi` to search for bocchi related content.\n2. `/nyaa/user/:username?` - Access a user's profile by their username, e.g., `/nyaa/user/ANiTorrent`.\n3. `/nyaa/user/:username/search/:query?` - Search within a specific user's submissions using a query, e.g., `/nyaa/user/ANiTorrent/search/bocchi`.\n4. `/nyaa/sukebei/search/:query?` - This route is for searching adult content with a specific query, e.g., `/nyaa/sukebei/search/hentai`.\n5. `/nyaa/sukebei/user/:username?` - Access an adult content user's profile, e.g., `/nyaa/sukebei/user/milannews`.\n6. `/nyaa/sukebei/user/:username/search/:query?` - Search within a specific user's adult content submissions, e.g., `/nyaa/sukebei/user/milannews/search/hentai`.\n\n:::",
+    "description": "::: tip\nThe 'Nyaa' includes several routes to access different parts of the site:\n\n1. `/nyaa/search/:query?` - Use this route to search for content with a specific query. For example, `/nyaa/search/bocchi` to search for bocchi related content.\n2. `/nyaa/user/:username?` - Access a user's profile by their username, e.g., `/nyaa/user/ANiTorrent`.\n3. `/nyaa/user/:username/search/:query?` - Search within a specific user's submissions using a query, e.g., `/nyaa/user/ANiTorrent/search/bocchi`.\n4. `/nyaa/sukebei/search/:query?` - This route is for searching adult content with a specific query, e.g., `/nyaa/sukebei/search/hentai`.\n5. `/nyaa/sukebei/user/:username?` - Access an adult content user's profile, e.g., `/nyaa/sukebei/user/milannews`.\n6. `/nyaa/sukebei/user/:username/search/:query?` - Search within a specific user's adult content submissions, e.g., `/nyaa/sukebei/user/milannews/search/hentai`.\n   :::",
     "lang": "en"
   },
   "nyc": {
@@ -95594,7 +95594,7 @@ export default {
     "apiRoutes": {},
     "name": "虚词",
     "url": "p-articles.com",
-    "description": "::: tip\np-articles provides some official RSS feeds:\n\n- section: `https://p-articles.com/section/:section`\n- contributors: `https://p-articles.com/contributors/:author`\n\n:::",
+    "description": "::: tip\np-articles provides some official RSS feeds:\n\n- section: `https://p-articles.com/section/:section`\n- contributors: `https://p-articles.com/contributors/:author`\n  :::",
     "lang": "en"
   },
   "pacilution": {
@@ -97517,7 +97517,7 @@ export default {
         "maintainers": [
           "CH563"
         ],
-        "description": "::: tip\n\n| 全部 | 科技 | 财经    | 生活 | 公司    | 人物      |\n| ---- | ---- | ------- | ---- | ------- | --------- |\n| all  | tech | finance | life | company | character |\n\n:::",
+        "description": "::: tip\n\n| 全部 | 科技 | 财经    | 生活 | 公司    | 人物      |\n| ---- | ---- | ------- | ---- | ------- | --------- |\n| all  | tech | finance | life | company | character |\n| :::  |      |         |      |         |           |",
         "location": "focus.ts",
         "module": () => import('@/routes/pconline/focus.ts')
       }
@@ -103276,7 +103276,7 @@ export default {
         "parameters": {
           "filter": "Filter string"
         },
-        "description": "::: tip\n\nFilter parameters:\n\n- category: 100: trending, 200: newest, 300: top\n- status\\_filter: 0: all, 100: available, 400: missed\n- community\\_filter: 0: all community, 100: verified, 200: followed\n- rewards\\_filter: 0: all rewards, 100: nft, 200: token, 400: whitelist\n- chain\\_filter: 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax\n- search: 'Search keyword',\n- count: 'Number of events to fetch',\n- page: 'Page number',\n\n:::",
+        "description": "::: tip\n\nFilter parameters:\n\n- category: 100: trending, 200: newest, 300: top\n- status\\_filter: 0: all, 100: available, 400: missed\n- community\\_filter: 0: all community, 100: verified, 200: followed\n- rewards\\_filter: 0: all rewards, 100: nft, 200: token, 400: whitelist\n- chain\\_filter: 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax\n- search: 'Search keyword',\n- count: 'Number of events to fetch',\n- page: 'Page number',\n  :::",
         "categories": [
           "other"
         ],
@@ -104581,7 +104581,7 @@ export default {
         ],
         "url": "rfi.fr",
         "example": "/rfi",
-        "description": "::: tip\n\n- To subscribe to [English News](https://www.rfi.fr/en/), which URL is `https://www.rfi.fr/en`, you can get the route as [`/rfi/en`](https://rsshub.app/rfi/en).\n- To subscribe to [English Europe News](https://www.rfi.fr/en/europe/), which URL is `https://www.rfi.fr/en/europe`, you can get the route as [`/rfi/en/europe`](https://rsshub.app/rfi/en/europe).\n- To subscribe to topic [Paris Olympics 2024](https://www.rfi.fr/en/tag/paris-olympics-2024/), which URL is `https://www.rfi.fr/en/tag/paris-olympics-2024`, you can get the route as [`/rfi/en/tag/paris-olympics-2024`](https://rsshub.app/rfi/en/tag/paris-olympics-2024).\n\n:::\n\n::: warning\nThis route does not support podcasts, please use the Offical RSS feed instead.\n:::",
+        "description": "::: tip\n\n- To subscribe to [English News](https://www.rfi.fr/en/), which URL is `https://www.rfi.fr/en`, you can get the route as [`/rfi/en`](https://rsshub.app/rfi/en).\n- To subscribe to [English Europe News](https://www.rfi.fr/en/europe/), which URL is `https://www.rfi.fr/en/europe`, you can get the route as [`/rfi/en/europe`](https://rsshub.app/rfi/en/europe).\n- To subscribe to topic [Paris Olympics 2024](https://www.rfi.fr/en/tag/paris-olympics-2024/), which URL is `https://www.rfi.fr/en/tag/paris-olympics-2024`, you can get the route as [`/rfi/en/tag/paris-olympics-2024`](https://rsshub.app/rfi/en/tag/paris-olympics-2024).\n  :::\n\n::: warning\nThis route does not support podcasts, please use the Offical RSS feed instead.\n:::",
         "location": "news.ts",
         "module": () => import('@/routes/rfi/news.ts')
       }
@@ -109840,7 +109840,7 @@ export default {
         "maintainers": [
           "lchtao26"
         ],
-        "description": "::: tip\n\n- 演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: [https://rsshub.app/showstart/search/city/ 杭州](https://rsshub.app/showstart/search/city/杭州)\n\n- 演出风格 `showStyle` 查询: `/showstart/search/style/:keyword`，如: [https://rsshub.app/showstart/search/style/ 摇滚](https://rsshub.app/showstart/search/style/摇滚)\n\n:::",
+        "description": "::: tip\n\n- 演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: [https://rsshub.app/showstart/search/city/ 杭州](https://rsshub.app/showstart/search/city/杭州)\n\n- 演出风格 `showStyle` 查询: `/showstart/search/style/:keyword`，如: [https://rsshub.app/showstart/search/style/ 摇滚](https://rsshub.app/showstart/search/style/摇滚)\n  :::",
         "location": "event.ts",
         "module": () => import('@/routes/showstart/event.ts')
       },
@@ -109925,7 +109925,7 @@ export default {
         "maintainers": [
           "lchtao26"
         ],
-        "description": "::: tip\n\n- 演出场地 ID 查询: `/showstart/search/site/:keyword`, 如: [https://rsshub.app/showstart/search/site/ 酒球会](https://rsshub.app/showstart/search/site/酒球会)\n\n:::",
+        "description": "::: tip\n\n- 演出场地 ID 查询: `/showstart/search/site/:keyword`, 如: [https://rsshub.app/showstart/search/site/ 酒球会](https://rsshub.app/showstart/search/site/酒球会)\n  :::",
         "location": "site.ts",
         "module": () => import('@/routes/showstart/site.ts')
       }
@@ -126605,7 +126605,7 @@ export default {
           "supportPodcast": false,
           "supportScihub": false
         },
-        "description": "::: tip\n仅支持自建，您需要设置以下配置才能正常使用：\n\n- 河畔 cookie: `UESTC_BBS_COOKIE`\n- Header 中的授权字段: `UESTC_BBS_AUTH_KEY`\n\n:::",
+        "description": "::: tip\n仅支持自建，您需要设置以下配置才能正常使用：\n\n- 河畔 cookie: `UESTC_BBS_COOKIE`\n- Header 中的授权字段: `UESTC_BBS_AUTH_KEY`\n  :::",
         "radar": [
           {
             "source": [
@@ -136739,7 +136739,7 @@ export default {
           "DIYgod",
           "pseudoyu"
         ],
-        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n\n:::\n\n::: tip\nYouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.\n:::",
+        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n| :::          |                                                                                    |         |\n\n::: tip\nYouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.\n:::",
         "features": {
           "requireConfig": [
             {
@@ -136800,7 +136800,7 @@ export default {
           "username": "YouTuber handle with @",
           "routeParams": "Extra parameters, see the table below"
         },
-        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n\n:::",
+        "description": "::: tip Parameter\n\n| Name         | Description                                                                        | Default |\n| ------------ | ---------------------------------------------------------------------------------- | ------- |\n| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n| :::          |                                                                                    |         |",
         "features": {
           "requireConfig": [
             {
@@ -137857,7 +137857,7 @@ export default {
           }
         ],
         "name": "用户作品",
-        "description": "例如:\n\n站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`\n\n站酷的个人主页 `https://www.zcool.com.cn/u/568339` 对应 rss 路径 `/zcool/user/568339`",
+        "description": "例如:\n\n```\n站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`\n\n站酷的个人主页 `https://www.zcool.com.cn/u/568339` 对应 rss 路径 `/zcool/user/568339`\n```",
         "maintainers": [
           "junbaor"
         ],
@@ -138738,7 +138738,7 @@ export default {
         "maintainers": [
           "JimenezLi"
         ],
-        "description": "[xhu](https://github.com/REToys/xhu)\n\n::: tip\n用户的 16 进制 id 获取方式：\n\n1. 可以通过 RSSHub Radar 扩展获取；\n2. 或者在用户主页打开 F12 控制台，执行以下代码：`console.log(/\"id\":\"([0-9a-f]*?)\",\"urlToken\"/.exec(document.getElementById('js-initialData').innerHTML)[1]);` 即可获取用户的 16 进制 id。\n\n:::",
+        "description": "[xhu](https://github.com/REToys/xhu)\n\n::: tip\n用户的 16 进制 id 获取方式：\n\n1. 可以通过 RSSHub Radar 扩展获取；\n2. 或者在用户主页打开 F12 控制台，执行以下代码：`console.log(/\"id\":\"([0-9a-f]*?)\",\"urlToken\"/.exec(document.getElementById('js-initialData').innerHTML)[1]);` 即可获取用户的 16 进制 id。\n   :::",
         "location": "xhu/activities.ts",
         "module": () => import('@/routes/zhihu/xhu/activities.ts')
       },
