@@ -68,7 +68,8 @@ Support for announcements and fancards:
 
 - Use \`/:source/:id/announcements\` to get announcements
 - Use \`/:source/:id/fancards\` to get fancards
-  :::`,
+
+:::`,
 };
 
 function parseJsonField(field: any): any {

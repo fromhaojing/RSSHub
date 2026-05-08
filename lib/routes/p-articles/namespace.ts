@@ -8,6 +8,7 @@ p-articles provides some official RSS feeds:
 
 - section: \`https://p-articles.com/section/:section\`
 - contributors: \`https://p-articles.com/contributors/:author\`
-  :::`,
+
+:::`,
     lang: 'en',
 };

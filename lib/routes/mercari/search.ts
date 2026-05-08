@@ -29,7 +29,8 @@ export const route: Route = {
 
 - 日本: \`keyword=シャツ&order=desc&sort=created_time&status=on_sale\`
 - 台灣: \`keyword=シャツ&sort=new&status=in-stock&availability=1\`
-  :::`,
+
+:::`,
 };
 
 function parseSearchQuery(queryString: string) {

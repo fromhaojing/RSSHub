@@ -213,6 +213,7 @@
             "oxfmt --no-error-on-unmatched-pattern"
         ],
         "*.{ts,tsx,js,cjs,mjs}": [
+            "tsx scripts/workflow/format-description.ts",
             "oxlint --type-aware --fix",
             "eslint --cache --fix --concurrency auto",
             "oxfmt --no-error-on-unmatched-pattern"

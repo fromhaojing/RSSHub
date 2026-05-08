@@ -40,7 +40,8 @@ export const route: Route = {
 
 - 河畔 cookie: \`UESTC_BBS_COOKIE\`
 - Header 中的授权字段: \`UESTC_BBS_AUTH_KEY\`
-  :::`,
+
+:::`,
     radar: [
         {
             source: ['bbs.uestc.edu.cn/*'],

@@ -37,7 +37,8 @@ export const route: Route = {
 | Financial Ratios      | stock-ratios       |
 | Investor's Psychology | behavioral-finance |
 | Mutual Funds          | mutual-fund        |
-| :::                   |                    |`,
+
+:::`,
 };
 
 async function handler(ctx: Context) {

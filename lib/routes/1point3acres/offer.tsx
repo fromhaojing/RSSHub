@@ -35,7 +35,8 @@ export const route: Route = {
 4. 点击 搜索 按钮
 5. 点击 results?ps=15\\&pg=1 POST 请求
 6. 找到 Request Payload 请求参数，例如 \`filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"}\` ，则三个 id 分别为: 13,1,ACADIAU
-   :::`,
+
+:::`,
 };
 
 async function handler(ctx) {

@@ -141,5 +141,6 @@ export const route: Route = {
 | 全部 | 科技 | 财经    | 生活 | 公司    | 人物      |
 | ---- | ---- | ------- | ---- | ------- | --------- |
 | all  | tech | finance | life | company | character |
-| :::  |      |         |      |         |           |`,
+
+:::`,
 };

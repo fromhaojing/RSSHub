@@ -13,7 +13,8 @@ You can change the language of each route to the languages listed below.
 | English | 日本语 | 한국의 | 中文             |
 | ------- | ------ | ------ | ---------------- |
 | en      | ja     | ko     | (leave it empty) |
-| :::     |        |        |                  |
+
+:::
 
 ::: tip
 JavBus has multiple backup domains, these routes use default domain \`https://javbus.com\`. If the domain is unreachable, you can add \`?domain=<domain>\` to the end of the route to specify the domain to visit. Let say you want to use the backup domain \`https://javsee.icu\`, you can add \`?domain=javsee.icu\` to the end of the route, then the route will be [\`/javbus/en?domain=javsee.icu\`](https://rsshub.app/javbus?domain=javsee.icu)

@@ -94,7 +94,8 @@ export const route: Route = {
 | 专业文章 | 出版物  | 德恒论坛 |
 | -------- | ------- | -------- |
 | paper    | publish | luntan   |
-| :::      |         |          |`,
+
+:::`,
     categories: ['new-media'],
 
     features: {

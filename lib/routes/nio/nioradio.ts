@@ -18,7 +18,8 @@ export const route: Route = {
 | 塞萌不塞车           | 661     |
 | 乐行记               | 11      |
 | Weekend Dance        | 547     |
-| :::                  |         |`,
+
+:::`,
     example: '/nio/nioradio/5',
     parameters: { albumid: '电台专辑 ID' },
     features: {

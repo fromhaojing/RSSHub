@@ -28,7 +28,8 @@ export const route: Route = {
 | ------------ | ---------------------------------------------------------------------------------- | ------- |
 | embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |
 | filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |
-| :::          |                                                                                    |         |
+
+:::
 
 ::: tip
 YouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.

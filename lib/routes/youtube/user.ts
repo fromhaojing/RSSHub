@@ -20,7 +20,8 @@ export const route: Route = {
 | ------------ | ---------------------------------------------------------------------------------- | ------- |
 | embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |
 | filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |
-| :::          |                                                                                    |         |`,
+
+:::`,
     features: {
         requireConfig: [
             {

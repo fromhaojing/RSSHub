@@ -25,7 +25,8 @@ Filter parameters:
 - search: 'Search keyword',
 - count: 'Number of events to fetch',
 - page: 'Page number',
-  :::`,
+
+:::`,
     categories: ['other'],
     features: {
         requireConfig: false,

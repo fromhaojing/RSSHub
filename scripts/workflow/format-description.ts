@@ -27,11 +27,99 @@ function walkDirectiveAst(node: any): void {
     }
 }
 
+// Without remark-directive, a `:::` line right after a list/table gets absorbed:
+// lists swallow it as lazy continuation, GFM tables consume it as another row.
+// Lift trailing `:::` out so it stringifies flush left.
+function shouldLiftFromList(list: any): boolean {
+    const lastItem = list.children?.at(-1);
+    if (lastItem?.type !== 'listItem') {
+        return false;
+    }
+    const lastPara = lastItem.children?.at(-1);
+    if (lastPara?.type !== 'paragraph') {
+        return false;
+    }
+    const lastText = lastPara.children?.at(-1);
+    if (lastText?.type !== 'text') {
+        return false;
+    }
+    return (lastText.value as string).trimEnd().endsWith('\n:::');
+}
+
+function liftFromList(list: any): void {
+    const lastItem = list.children.at(-1);
+    const lastPara = lastItem.children.at(-1);
+    const lastText = lastPara.children.at(-1);
+    lastText.value = (lastText.value as string).trimEnd().slice(0, -4);
+    if (lastText.value === '') {
+        lastPara.children.pop();
+    }
+    if (lastPara.children.length === 0) {
+        lastItem.children.pop();
+    }
+}
+
+function shouldLiftFromTable(table: any): boolean {
+    const lastRow = table.children?.at(-1);
+    if (lastRow?.type !== 'tableRow') {
+        return false;
+    }
+    const cells = lastRow.children;
+    if (!Array.isArray(cells) || cells.length === 0) {
+        return false;
+    }
+    const firstCell = cells[0];
+    if (firstCell?.type !== 'tableCell' || firstCell.children?.length !== 1) {
+        return false;
+    }
+    const text = firstCell.children[0];
+    if (text?.type !== 'text' || text.value !== ':::') {
+        return false;
+    }
+    for (let j = 1; j < cells.length; j++) {
+        if (cells[j]?.type !== 'tableCell' || cells[j].children?.length !== 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function visitForLift(parent: any): void {
+    if (!Array.isArray(parent.children)) {
+        return;
+    }
+    for (const child of parent.children) {
+        visitForLift(child);
+    }
+    for (let i = parent.children.length - 1; i >= 0; i--) {
+        const node = parent.children[i];
+        let lifted = false;
+        if (node.type === 'list' && shouldLiftFromList(node)) {
+            liftFromList(node);
+            lifted = true;
+        } else if (node.type === 'table' && shouldLiftFromTable(node)) {
+            node.children.pop();
+            lifted = true;
+        }
+        if (lifted) {
+            parent.children.splice(i + 1, 0, {
+                type: 'paragraph',
+                children: [{ type: 'text', value: ':::' }],
+            });
+        }
+    }
+}
+
+function remarkLiftClosingDirective() {
+    return (tree: any) => visitForLift(tree);
+}
+
 const processor = remark()
     .data('settings', {
         bullet: '-',
     })
     .use(remarkDirectiveSpace)
+    .use(remarkLiftClosingDirective)
     .use(remarkPangu)
     .use(remarkGfm, {
         stringLength: stringWidth,
@@ -179,10 +267,23 @@ async function processFile(filePath: string): Promise<void> {
     }
 }
 
+function isRouteFile(filePath: string): boolean {
+    const abs = path.resolve(filePath);
+    if (!abs.startsWith(routesDir + path.sep)) {
+        return false;
+    }
+    const base = path.basename(abs);
+    return /\.tsx?$/.test(base) && !base.endsWith('.d.ts');
+}
+
 async function main() {
     const started = performance.now();
-    // @ts-ignore ts(2550)
-    const files: string[] = await Array.fromAsync(walk(routesDir));
+    const args = process.argv.slice(2);
+    const files: string[] =
+        args.length > 0
+            ? args.map((f) => path.resolve(f)).filter((f) => isRouteFile(f))
+            : // @ts-ignore ts(2550)
+              await Array.fromAsync(walk(routesDir));
 
     await Promise.all(files.map((f) => processFile(f)));
 

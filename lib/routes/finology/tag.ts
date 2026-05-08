@@ -50,7 +50,8 @@ export const route: Route = {
 | World News               | world-news               |
 | Technology               | technology               |
 | Regulatory Bodies        | regulatory-bodies        |
-| :::                      |                          |`,
+
+:::`,
 };
 
 async function handler(ctx: Context) {
