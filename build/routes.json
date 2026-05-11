@@ -3334,7 +3334,7 @@
             "target": "/:board/catalog"
           }
         ],
-        "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key               | Description                                      | Accepts                | Defaults to |\n| ----------------- | ------------------------------------------------ | ---------------------- | ----------- |\n| `showReplyCount`  | Show number of replies of each thread in catalog | `0`/`1`/`true`/`false` | `false`     |\n| `showLastReplies` | Show last 5 replies of each thread               | `0`/`1`/`true`/`false` | `false`     |\n| `revealSpoilers`  | Don't wrap images tagged as spoilers             | `0`/`1`/`true`/`false` | `false`     |",
+        "description": "Specify options (in the format of query string) in parameter `routeParams` to control extra features for threads\n\n| Key               | Description                                      | Accepts                | Defaults to |\n| ----------------- | ------------------------------------------------ | ---------------------- | ----------- |\n| `showReplyCount`  | Show number of replies of each thread in catalog | `0`/`1`/`true`/`false` | `false`     |\n| `showLastReplies` | Show last 5 replies of each thread               | `0`/`1`/`true`/`false` | `false`     |\n| `revealSpoilers`  | Don't wrap images tagged as spoilers             | `0`/`1`/`true`/`false` | `false`     |\n| `excludeSticky`   | Filter out sticky threads                        | `0`/`1`/`true`/`false` | `false`     |\n| `minReplies`      | Minimum replies per thread                       | Integer                | None        |\n| `maxReplies`      | Maximum replies per thread                       | Integer                | None        |",
         "location": "catalog.tsx",
         "module": "() => import('@/routes/4chan/catalog.tsx')"
       }
@@ -61428,6 +61428,45 @@
     "url": "www.huitun.com",
     "lang": "zh-CN"
   },
+  "humanlayer": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/humanlayer/blog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.humanlayer.dev/blog"
+            ],
+            "target": "/humanlayer/blog"
+          }
+        ],
+        "name": "Blog",
+        "maintainers": [
+          "zj1123581321"
+        ],
+        "url": "www.humanlayer.dev/blog",
+        "location": "blog.ts",
+        "module": "() => import('@/routes/humanlayer/blog.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "HumanLayer",
+    "url": "www.humanlayer.dev",
+    "lang": "en"
+  },
   "hunanpea": {
     "routes": {
       "/rsks/:guid": {
@@ -91965,7 +92004,8 @@
         "maintainers": [
           "Lava-Swimmer",
           "noname1776",
-          "camera-2018"
+          "camera-2018",
+          "Q16KBreak"
         ],
         "location": "main.ts",
         "module": "() => import('@/routes/nyaa/main.ts')"
@@ -91998,7 +92038,8 @@
         "maintainers": [
           "Lava-Swimmer",
           "noname1776",
-          "camera-2018"
+          "camera-2018",
+          "Q16KBreak"
         ],
         "location": "main.ts",
         "module": "() => import('@/routes/nyaa/main.ts')"
@@ -92031,7 +92072,8 @@
         "maintainers": [
           "Lava-Swimmer",
           "noname1776",
-          "camera-2018"
+          "camera-2018",
+          "Q16KBreak"
         ],
         "location": "main.ts",
         "module": "() => import('@/routes/nyaa/main.ts')"
@@ -92064,7 +92106,8 @@
         "maintainers": [
           "Lava-Swimmer",
           "noname1776",
-          "camera-2018"
+          "camera-2018",
+          "Q16KBreak"
         ],
         "location": "main.ts",
         "module": "() => import('@/routes/nyaa/main.ts')"
@@ -92097,7 +92140,8 @@
         "maintainers": [
           "Lava-Swimmer",
           "noname1776",
-          "camera-2018"
+          "camera-2018",
+          "Q16KBreak"
         ],
         "location": "main.ts",
         "module": "() => import('@/routes/nyaa/main.ts')"
@@ -92130,7 +92174,8 @@
         "maintainers": [
           "Lava-Swimmer",
           "noname1776",
-          "camera-2018"
+          "camera-2018",
+          "Q16KBreak"
         ],
         "location": "main.ts",
         "module": "() => import('@/routes/nyaa/main.ts')"
@@ -92139,7 +92184,7 @@
     "apiRoutes": {},
     "name": "Nyaa",
     "url": "nyaa.si",
-    "description": "::: tip\nThe 'Nyaa' includes several routes to access different parts of the site:\n\n1. `/nyaa/search/:query?` - Use this route to search for content with a specific query. For example, `/nyaa/search/bocchi` to search for bocchi related content.\n2. `/nyaa/user/:username?` - Access a user's profile by their username, e.g., `/nyaa/user/ANiTorrent`.\n3. `/nyaa/user/:username/search/:query?` - Search within a specific user's submissions using a query, e.g., `/nyaa/user/ANiTorrent/search/bocchi`.\n4. `/nyaa/sukebei/search/:query?` - This route is for searching adult content with a specific query, e.g., `/nyaa/sukebei/search/hentai`.\n5. `/nyaa/sukebei/user/:username?` - Access an adult content user's profile, e.g., `/nyaa/sukebei/user/milannews`.\n6. `/nyaa/sukebei/user/:username/search/:query?` - Search within a specific user's adult content submissions, e.g., `/nyaa/sukebei/user/milannews/search/hentai`.\n\n:::",
+    "description": "::: tip\nThe 'Nyaa' includes several routes to access different parts of the site:\n\n1. `/nyaa/search/:query?` - Use this route to search for content with a specific query. For example, `/nyaa/search/bocchi` to search for bocchi related content.\n2. `/nyaa/user/:username?` - Access a user's profile by their username, e.g., `/nyaa/user/ANiTorrent`.\n3. `/nyaa/user/:username/search/:query?` - Search within a specific user's submissions using a query, e.g., `/nyaa/user/ANiTorrent/search/bocchi`.\n4. `/nyaa/sukebei/search/:query?` - This route is for searching adult content with a specific query, e.g., `/nyaa/sukebei/search/hentai`.\n5. `/nyaa/sukebei/user/:username?` - Access an adult content user's profile, e.g., `/nyaa/sukebei/user/milannews`.\n6. `/nyaa/sukebei/user/:username/search/:query?` - Search within a specific user's adult content submissions, e.g., `/nyaa/sukebei/user/milannews/search/hentai`.\n7. Append the query string `?mode=fulltext` to any URL to retrieve detailed descriptions. By default, it returns `6` entries, but this can be adjusted using the `limit` query string, e.g., `/nyaa/user/VCB-Studio?mode=fulltext&limit=10`.\n\n:::",
     "lang": "en"
   },
   "nyc": {
