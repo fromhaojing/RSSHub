@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Qwen Blog',
-    url: 'qwenlm.github.io',
+    name: '国际能源网',
+    url: 'www.in-en.com',
+    lang: 'zh-CN',
 };
