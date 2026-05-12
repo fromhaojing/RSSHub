@@ -1,11 +1,17 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { APIRoute } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 const mobileBaseUrl = 'https://m.douban.com';
 const subjectBaseUrl = 'https://book.douban.com/subject';
+const doubanHeaders = {
+    Referer: mobileBaseUrl,
+    'User-Agent': config.trueUA,
+};
 
 type SearchResponse = {
     subjects?: {
@@ -34,6 +40,14 @@ type SearchItem = {
     };
 };
 
+type AuthorDetail = {
+    name: string;
+    id?: string;
+    url?: string;
+    uri?: string;
+    matchedName?: string;
+};
+
 export const apiRoute: APIRoute = {
     path: '/book/isbnDetail/:isbn',
     maintainers: ['lyqluis'],
@@ -57,23 +71,7 @@ async function handler(ctx) {
         };
     }
 
-    const searchUrl = `${mobileBaseUrl}/rexxar/api/v2/search?${new URLSearchParams({
-        q: isbn,
-        type: '',
-        loc_id: '',
-        start: '0',
-        count: '10',
-        sort: 'relevance',
-    })}`;
-
-    const searchResponse = await got({
-        url: searchUrl,
-        headers: {
-            Referer: mobileBaseUrl,
-            'User-Agent': config.trueUA,
-        },
-    });
-    const searchData = searchResponse.data as SearchResponse;
+    const searchData = await cache.tryGet(`douban:book:isbn:${isbn}`, () => fetchSearchData(isbn), config.cache.routeExpire);
     const searchItem = searchData.subjects?.items?.find((item) => item.target_type === 'book' && (item.target_id || item.target?.id));
     const subjectId = searchItem?.target_id || searchItem?.target?.id;
 
@@ -85,25 +83,29 @@ async function handler(ctx) {
     }
 
     const url = `${subjectBaseUrl}/${subjectId}/`;
-    const subjectResponse = await got({
+    const subjectResponsePromise = got({
         url,
-        headers: {
-            Referer: mobileBaseUrl,
-            'User-Agent': config.trueUA,
-        },
+        headers: doubanHeaders,
     });
+    const authorDetailsPromise = fetchAuthorDetails(parseSearchItemAuthors(searchItem));
+    const [subjectResponse, prefetchedAuthorDetails] = await Promise.all([subjectResponsePromise, authorDetailsPromise]);
     const $ = load(subjectResponse.data);
 
     return {
         code: 200,
-        data: await parseBookDetail($, isbn, subjectId, url, shouldFetchSeries, searchItem),
+        data: await parseBookDetail($, isbn, subjectId, url, shouldFetchSeries, searchItem, prefetchedAuthorDetails),
     };
 }
 
-async function parseBookDetail($, isbn: string, subjectId: string, url: string, shouldFetchSeries: boolean, searchItem?: SearchItem) {
+async function parseBookDetail($, isbn: string, subjectId: string, url: string, shouldFetchSeries: boolean, searchItem?: SearchItem, prefetchedAuthorDetails: AuthorDetail[] = []) {
     const schema = parseJsonLd($);
     const info = parseInfo($);
-    const bookInfo = { ...info };
+    const authorNames = uniqueTexts([...(info.authors || []), ...parseSearchItemAuthors(searchItem)]);
+    const linkedAuthorDetails = parseLinkedAuthorDetails(info.links, authorNames);
+    const authorDetailsPromise = completeAuthorDetails(authorNames, [...linkedAuthorDetails, ...prefetchedAuthorDetails]);
+    const seriesPromise = shouldFetchSeries ? parseSeries($, url) : undefined;
+    const [authorDetails, series] = await Promise.all([authorDetailsPromise, seriesPromise]);
+    const bookInfo = { ...info, authorDetails };
     delete bookInfo.raw;
     const title = normalizeText($('h1.title span[property="v:itemreviewed"]').first().text()) || normalizeText($('meta[property="og:title"]').attr('content')) || schema?.name || searchItem?.target?.title;
     const subtitle = normalizeText($('h2.subtitle span[property="v:subtitle"]').first().text());
@@ -118,8 +120,9 @@ async function parseBookDetail($, isbn: string, subjectId: string, url: string, 
         title,
         subtitle,
         cover,
+        authors: authorDetails,
         info: bookInfo,
-        series: shouldFetchSeries ? await parseSeries($, url) : undefined,
+        series,
         rating: parseRating($),
         summary,
         authorIntro: getHeadingSectionText($, '作者简介'),
@@ -127,6 +130,98 @@ async function parseBookDetail($, isbn: string, subjectId: string, url: string, 
         blockquotes: parseBlockquotes($, url),
         reviews: parseReviews($, url),
     };
+}
+
+async function fetchSearchData(q: string, type = '') {
+    const searchUrl = `${mobileBaseUrl}/rexxar/api/v2/search?${new URLSearchParams({
+        q,
+        type,
+        loc_id: '',
+        start: '0',
+        count: '10',
+        sort: 'relevance',
+    })}`;
+
+    const searchResponse = await got({
+        url: searchUrl,
+        headers: doubanHeaders,
+    });
+
+    return searchResponse.data as SearchResponse;
+}
+
+function parseSearchItemAuthors(searchItem?: SearchItem) {
+    const parts = searchItem?.target?.card_subtitle
+        ?.split('/')
+        .map((item) => normalizeText(item))
+        .filter(Boolean);
+
+    if (!parts) {
+        return [];
+    }
+
+    const authors: string[] = [];
+
+    for (const part of parts) {
+        if (isBookMetaPart(part)) {
+            break;
+        }
+
+        authors.push(part);
+    }
+
+    return authors;
+}
+
+function isBookMetaPart(value: string) {
+    return /^\d{4}/.test(value) || /出版社|出版公司|书局|书店|Press|Books|Publishing/i.test(value);
+}
+
+async function completeAuthorDetails(authorNames: string[], knownDetails: AuthorDetail[]) {
+    const detailByName = new Map(knownDetails.map((detail) => [detail.name, detail]));
+    const missingAuthorNames = authorNames.filter((name) => !detailByName.get(name)?.id);
+    const fetchedDetails = await fetchAuthorDetails(missingAuthorNames);
+
+    for (const detail of fetchedDetails) {
+        detailByName.set(detail.name, detail);
+    }
+
+    return authorNames.map((name) => detailByName.get(name) || { name });
+}
+
+function parseLinkedAuthorDetails(links: Array<{ title?: string; url?: string }>, authorNames: string[]) {
+    return authorNames.flatMap((name) => {
+        const link = links.find((item) => item.title === name);
+        const id = extractPersonId(link?.url);
+
+        return id && link?.url ? [{ name, id, url: link.url }] : [];
+    });
+}
+
+function fetchAuthorDetails(authorNames: string[]) {
+    return Promise.all(uniqueTexts(authorNames).map((name) => fetchAuthorDetail(name)));
+}
+
+async function fetchAuthorDetail(name: string): Promise<AuthorDetail> {
+    try {
+        const searchData = await cache.tryGet(`douban:book:author:${name}`, () => fetchSearchData(name, 'person'), config.cache.contentExpire);
+        const personItem = searchData.subjects?.items?.find((item) => item.target_type === 'person' && normalizeText(item.target?.title) === name) || searchData.subjects?.items?.find((item) => item.target_type === 'person');
+        const id = personItem?.target_id || personItem?.target?.id;
+
+        return {
+            name,
+            id,
+            url: personItem?.target?.url || (id ? `https://www.douban.com/personage/${id}` : undefined),
+            uri: personItem?.target?.uri,
+            matchedName: personItem?.target?.title,
+        };
+    } catch {
+        return { name };
+    }
+}
+
+function extractPersonId(url?: string) {
+    return url?.match(/\/(?:personage|author)\/(\d+)/)?.[1];
 }
 
 function parseJsonLd($) {
@@ -275,7 +370,7 @@ function parseSeriesLinks($, baseUrl: string) {
     return [...seriesItems.values()];
 }
 
-async function fetchSeries(series) {
+function fetchSeries(series) {
     if (!series.url) {
         return {
             ...series,
@@ -283,25 +378,25 @@ async function fetchSeries(series) {
         };
     }
 
-    const response = await got({
-        url: series.url,
-        headers: {
-            Referer: mobileBaseUrl,
-            'User-Agent': config.trueUA,
-        },
-    });
-    const $ = load(response.data);
-    const title = normalizeText($('h1').first().text()) || series.title;
+    return cache.tryGet(`douban:book:series:v2:${series.url}`, async () => {
+        const response = await got({
+            url: series.url,
+            headers: doubanHeaders,
+        });
+        const $ = load(response.data);
+        const title = normalizeText($('h1').first().text()) || series.title;
+        const books = await parseSeriesBooks($, series.url);
 
-    return {
-        ...series,
-        title,
-        books: parseSeriesBooks($, series.url),
-    };
+        return {
+            ...series,
+            title,
+            books,
+        };
+    });
 }
 
 function parseSeriesBooks($, baseUrl: string) {
-    return $('.subject-list .subject-item')
+    const books = $('.subject-list .subject-item')
         .toArray()
         .map((element) => {
             const item = $(element);
@@ -338,6 +433,48 @@ function parseSeriesBooks($, baseUrl: string) {
             };
         })
         .filter((item) => item.title || item.url);
+
+    return pMap(books, enrichSeriesBook, { concurrency: 3 });
+}
+
+async function enrichSeriesBook(book) {
+    if (!book.url) {
+        return book;
+    }
+
+    try {
+        const detail = await fetchSeriesBookDetail(book.url);
+
+        if (!detail?.isbn) {
+            return book;
+        }
+
+        return {
+            ...book,
+            isbn: detail.isbn,
+            meta: {
+                ...book.meta,
+                isbn: detail.isbn,
+            },
+        };
+    } catch {
+        return book;
+    }
+}
+
+function fetchSeriesBookDetail(url: string) {
+    return cache.tryGet(`douban:book:series-book:${url}`, async () => {
+        const response = await got({
+            url,
+            headers: doubanHeaders,
+        });
+        const $ = load(response.data);
+        const info = parseInfo($);
+
+        return {
+            isbn: info.isbn,
+        };
+    });
 }
 
 function parseSeriesBookInfo(info?: string) {
@@ -437,6 +574,12 @@ function splitNames(value?: string) {
         ?.split('/')
         .map((item) => normalizeText(item))
         .filter(Boolean);
+}
+
+function uniqueTexts(values: Array<string | undefined>) {
+    const texts = values.map((value) => normalizeText(value)).filter(Boolean) as string[];
+
+    return [...new Set(texts)];
 }
 
 function parseNumber(value?: string) {
