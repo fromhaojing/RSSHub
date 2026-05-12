@@ -14,6 +14,7 @@ const doubanHeaders = {
 };
 
 type SearchResponse = {
+    items?: SearchItem[];
     subjects?: {
         items?: SearchItem[];
     };
@@ -38,6 +39,24 @@ type SearchItem = {
         };
         null_rating_reason?: string;
     };
+};
+
+type DesktopBookSearchResponse = {
+    items?: DesktopBookSearchItem[];
+};
+
+type DesktopBookSearchItem = {
+    abstract?: string;
+    cover_url?: string;
+    id?: number | string;
+    rating?: {
+        count?: number;
+        star_count?: number;
+        value?: number;
+    };
+    title?: string;
+    tpl_name?: string;
+    url?: string;
 };
 
 type AuthorDetail = {
@@ -71,8 +90,8 @@ async function handler(ctx) {
         };
     }
 
-    const searchData = await cache.tryGet(`douban:book:isbn:${isbn}`, () => fetchSearchData(isbn), config.cache.routeExpire);
-    const searchItem = searchData.subjects?.items?.find((item) => item.target_type === 'book' && (item.target_id || item.target?.id));
+    const searchData = await cache.tryGet(`douban:book:isbn:v2:${isbn}`, () => fetchBookSearchData(isbn), config.cache.routeExpire);
+    const searchItem = getSearchItems(searchData).find((item) => item.target_type === 'book' && (item.target_id || item.target?.id));
     const subjectId = searchItem?.target_id || searchItem?.target?.id;
 
     if (!subjectId) {
@@ -105,6 +124,7 @@ async function parseBookDetail($, isbn: string, subjectId: string, url: string, 
     const authorDetailsPromise = completeAuthorDetails(authorNames, [...linkedAuthorDetails, ...prefetchedAuthorDetails]);
     const seriesPromise = shouldFetchSeries ? parseSeries($, url) : undefined;
     const [authorDetails, series] = await Promise.all([authorDetailsPromise, seriesPromise]);
+    const primaryAuthorDetail = getPrimaryAuthorDetail(authorDetails);
     const bookInfo = { ...info, authorDetails };
     delete bookInfo.raw;
     const title = normalizeText($('h1.title span[property="v:itemreviewed"]').first().text()) || normalizeText($('meta[property="og:title"]').attr('content')) || schema?.name || searchItem?.target?.title;
@@ -120,6 +140,10 @@ async function parseBookDetail($, isbn: string, subjectId: string, url: string, 
         title,
         subtitle,
         cover,
+        authorId: primaryAuthorDetail?.id,
+        authorUrl: primaryAuthorDetail?.url,
+        authorUri: primaryAuthorDetail?.uri,
+        authorDetails,
         authors: authorDetails,
         info: bookInfo,
         series,
@@ -148,6 +172,84 @@ async function fetchSearchData(q: string, type = '') {
     });
 
     return searchResponse.data as SearchResponse;
+}
+
+async function fetchBookSearchData(q: string) {
+    try {
+        return await fetchSearchData(q);
+    } catch {
+        return fetchDesktopBookSearchData(q);
+    }
+}
+
+async function fetchDesktopBookSearchData(q: string): Promise<SearchResponse> {
+    const searchResponse = await got({
+        url: `https://book.douban.com/search/${encodeURIComponent(q)}`,
+        headers: doubanHeaders,
+    });
+    const searchData = parseDesktopBookSearchData(searchResponse.data);
+    const items = (searchData.items ?? []).flatMap((item) => {
+        const searchItem = mapDesktopBookSearchItem(item);
+
+        return searchItem ? [searchItem] : [];
+    });
+
+    return {
+        subjects: {
+            items,
+        },
+    };
+}
+
+function parseDesktopBookSearchData(html: string): DesktopBookSearchResponse {
+    const dataStart = html.indexOf('window.__DATA__');
+
+    if (dataStart === -1) {
+        return {};
+    }
+
+    const objectStart = html.indexOf('{', dataStart);
+    const objectEnd = html.indexOf('};', objectStart);
+
+    if (objectStart === -1 || objectEnd === -1) {
+        return {};
+    }
+
+    try {
+        return JSON.parse(html.slice(objectStart, objectEnd + 1));
+    } catch {
+        return {};
+    }
+}
+
+function mapDesktopBookSearchItem(item: DesktopBookSearchItem): SearchItem | undefined {
+    const targetType = item.tpl_name === 'search_subject' ? 'book' : item.tpl_name === 'search_common' ? 'author' : undefined;
+    const id = item.id?.toString();
+    const title = normalizeText(item.title);
+
+    if (!targetType || !id || !title) {
+        return;
+    }
+
+    return {
+        target_id: id,
+        target_type: targetType,
+        target: {
+            id,
+            title,
+            abstract: item.abstract,
+            url: item.url,
+            cover_url: item.cover_url,
+            card_subtitle: item.abstract,
+            rating: item.rating
+                ? {
+                      count: item.rating.count,
+                      star_count: item.rating.star_count,
+                      value: item.rating.value,
+                  }
+                : undefined,
+        },
+    };
 }
 
 function parseSearchItemAuthors(searchItem?: SearchItem) {
@@ -202,26 +304,163 @@ function fetchAuthorDetails(authorNames: string[]) {
     return Promise.all(uniqueTexts(authorNames).map((name) => fetchAuthorDetail(name)));
 }
 
+function getPrimaryAuthorDetail(authorDetails: AuthorDetail[]) {
+    return authorDetails.find((item) => item.id || item.url || item.uri) || authorDetails[0];
+}
+
 async function fetchAuthorDetail(name: string): Promise<AuthorDetail> {
     try {
-        const searchData = await cache.tryGet(`douban:book:author:${name}`, () => fetchSearchData(name, 'person'), config.cache.contentExpire);
-        const personItem = searchData.subjects?.items?.find((item) => item.target_type === 'person' && normalizeText(item.target?.title) === name) || searchData.subjects?.items?.find((item) => item.target_type === 'person');
-        const id = personItem?.target_id || personItem?.target?.id;
+        let bookAuthorDetail: AuthorDetail | undefined;
+
+        try {
+            bookAuthorDetail = await fetchBookAuthorDetail(name);
+        } catch {
+            // Fall back to mobile search when Douban book author pages are unavailable.
+        }
+
+        if (bookAuthorDetail?.id) {
+            return bookAuthorDetail;
+        }
+
+        const personItem = await fetchPersonSearchItem(name);
+        const searchItemId = getSearchItemPersonId(personItem);
+        const id = searchItemId || bookAuthorDetail?.id;
 
         return {
             name,
             id,
-            url: personItem?.target?.url || (id ? `https://www.douban.com/personage/${id}` : undefined),
-            uri: personItem?.target?.uri,
-            matchedName: personItem?.target?.title,
+            url: personItem?.target?.url || bookAuthorDetail?.url || (id ? `https://www.douban.com/personage/${id}` : undefined),
+            uri: personItem?.target?.uri || bookAuthorDetail?.uri,
+            matchedName: personItem?.target?.title || bookAuthorDetail?.matchedName,
         };
     } catch {
         return { name };
     }
 }
 
-function extractPersonId(url?: string) {
-    return url?.match(/\/(?:personage|author)\/(\d+)/)?.[1];
+async function fetchPersonSearchItem(name: string) {
+    try {
+        const searchData = await cache.tryGet(`douban:book:author:v2:${name}:person`, () => fetchSearchData(name, 'person'), config.cache.contentExpire);
+        const personItem = findPersonSearchItem(searchData, name);
+
+        if (personItem) {
+            return personItem;
+        }
+    } catch {
+        // Fall back to Douban book author pages when mobile person search is blocked.
+    }
+
+    try {
+        const fallbackSearchData = await cache.tryGet(`douban:book:author:v2:${name}:all`, () => fetchSearchData(name), config.cache.contentExpire);
+
+        return findPersonSearchItem(fallbackSearchData, name);
+    } catch {
+        return;
+    }
+}
+
+function fetchBookAuthorDetail(name: string) {
+    return cache.tryGet(
+        `douban:book:author-search:v1:${name}`,
+        async () => {
+            const searchResponse = await got({
+                url: `https://book.douban.com/authors/search?${new URLSearchParams({ search_text: name })}`,
+                headers: doubanHeaders,
+            });
+            const $ = load(searchResponse.data);
+            const authorLinks = $('a[href*="/author/"]')
+                .toArray()
+                .map((element) => {
+                    const link = $(element);
+
+                    return {
+                        title: normalizeText(link.attr('title') || link.text()),
+                        url: resolveUrl(link.attr('href'), subjectBaseUrl),
+                    };
+                })
+                .filter((item) => item.title && item.url);
+            const authorLink = authorLinks.find((item) => isAuthorNameMatch(item.title, name)) || authorLinks[0];
+
+            if (!authorLink?.url) {
+                return { name };
+            }
+
+            let personageDetail: Awaited<ReturnType<typeof fetchBookAuthorPageDetail>> | undefined;
+
+            try {
+                personageDetail = await fetchBookAuthorPageDetail(authorLink.url);
+            } catch {
+                // Keep the book author URL when the personage bridge is unavailable.
+            }
+
+            const url = personageDetail?.url || authorLink.url;
+
+            return {
+                name,
+                id: personageDetail?.id || extractBookAuthorId(authorLink.url),
+                url,
+                uri: personageDetail?.uri,
+                matchedName: authorLink.title,
+            };
+        },
+        config.cache.contentExpire
+    );
+}
+
+function fetchBookAuthorPageDetail(url: string) {
+    return cache.tryGet(
+        `douban:book:author-page:v1:${url}`,
+        async () => {
+            const response = await got({
+                url,
+                headers: doubanHeaders,
+            });
+            const $ = load(response.data);
+            const personageUrl = resolveUrl($('#red').attr('value') || $('a[href*="/personage/"]').first().attr('href'), url);
+            const id = extractPersonId(personageUrl);
+
+            return {
+                id,
+                url: personageUrl,
+                uri: id ? `douban://douban.com/subject/${id}?subtype=person` : undefined,
+            };
+        },
+        config.cache.contentExpire
+    );
+}
+
+function isAuthorNameMatch(value: string | undefined, name: string) {
+    const normalizedValue = normalizeText(value);
+
+    return normalizedValue === name || Boolean(normalizedValue?.startsWith(`${name} `));
+}
+
+function getSearchItems(searchData: SearchResponse) {
+    return [...(searchData.subjects?.items ?? []), ...(searchData.items ?? [])];
+}
+
+function findPersonSearchItem(searchData: SearchResponse, name: string) {
+    const items = getSearchItems(searchData).filter((item) => isPersonSearchItem(item));
+
+    return items.find((item) => normalizeText(item.target?.title) === name) || items[0];
+}
+
+function isPersonSearchItem(item: SearchItem) {
+    const targetType = item.target_type;
+
+    return targetType === 'person' || targetType === 'author' || targetType === 'personage' || Boolean(extractPersonId(item.target?.url) || extractPersonId(item.target?.uri));
+}
+
+function getSearchItemPersonId(item?: SearchItem) {
+    return item?.target_id || item?.target?.id || extractPersonId(item?.target?.url) || extractPersonId(item?.target?.uri);
+}
+
+function extractPersonId(value?: string) {
+    return value?.match(/\/(?:personage|author)\/(\d+)/)?.[1];
+}
+
+function extractBookAuthorId(value?: string) {
+    return value?.match(/\/author\/(\d+)/)?.[1];
 }
 
 function parseJsonLd($) {
