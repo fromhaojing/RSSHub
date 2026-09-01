@@ -1,3 +1,5 @@
+import { convert } from 'html-to-text';
+
 import { config } from '@/config';
 import type { APIRoute } from '@/types';
 import cache from '@/utils/cache';
@@ -52,7 +54,7 @@ async function handler(ctx) {
         };
     }
 
-    const personage = await cache.tryGet(`douban:book:author-profile:v1:${personageId}`, () => fetchPersonage(personageId), config.cache.contentExpire);
+    const personage = await cache.tryGet(`douban:book:author-profile:v2:${personageId}`, () => fetchPersonage(personageId), config.cache.contentExpire);
 
     return {
         code: 200,
@@ -61,7 +63,7 @@ async function handler(ctx) {
             name: personage.title ?? personageId,
             avatar: personage.cover?.large?.url ?? personage.cover?.normal?.url,
             url: personage.url ?? `${mobileBaseUrl}/personage/${personageId}/`,
-            intro: personage.desc,
+            intro: toPlainText(personage.desc),
             worksCount: getBookWorksCount(personage),
         },
     };
@@ -80,4 +82,20 @@ async function fetchPersonage(personageId: string) {
 
 function getBookWorksCount(personage: PersonageResponse) {
     return personage.modules?.find((module) => module.type === 'work_collections')?.payload?.collections?.find((collection) => collection.title === '图书')?.total;
+}
+
+function toPlainText(value?: string) {
+    if (!value) {
+        return;
+    }
+
+    return convert(value, {
+        wordwrap: false,
+        selectors: [
+            { selector: 'a', options: { ignoreHref: true } },
+            { selector: 'img', format: 'skip' },
+        ],
+    })
+        .replaceAll(/\n{3,}/g, '\n\n')
+        .trim();
 }
