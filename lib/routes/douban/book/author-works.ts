@@ -1,3 +1,6 @@
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import type { APIRoute } from '@/types';
 import cache from '@/utils/cache';
@@ -10,6 +13,7 @@ const doubanHeaders = {
     'User-Agent': config.trueUA,
 };
 const pageSize = 10;
+const isbnCacheTtl = 30 * 24 * 60 * 60;
 
 type DoubanImage = {
     url?: string;
@@ -105,7 +109,30 @@ async function handler(ctx) {
 
     const page = await cache.tryGet(`douban:book:author-works:v1:${bookCollection.id}:0`, () => fetchWorks(bookCollection.id!, 0), config.cache.contentExpire);
     const total = page.total ?? bookCollection.total ?? 0;
-    const works = (page.works ?? []).flatMap((work) => mapWork(work));
+    const works = (
+        await pMap(
+            page.works ?? [],
+            async (work) => {
+                const item = mapWork(work);
+
+                if (!item) {
+                    return;
+                }
+
+                try {
+                    const result = await cache.tryGet(`douban:book:subject-isbn:v1:${item.subjectId}`, () => fetchBookIsbn(item.subjectId), isbnCacheTtl);
+
+                    return {
+                        ...item,
+                        isbn: result.isbn,
+                    };
+                } catch {
+                    return item;
+                }
+            },
+            { concurrency: 5 }
+        )
+    ).filter((item) => item !== undefined);
 
     return {
         code: 200,
@@ -170,25 +197,47 @@ function mapWork(work: DoubanWork) {
     const subject = work.subject;
 
     if (!subject?.id || !subject.title) {
-        return [];
+        return;
     }
 
     const info = Object.fromEntries(subject.extra?.info ?? []);
     const rating = subject.extra?.rating_group?.rating;
 
-    return [
-        {
-            subjectId: subject.id,
-            title: subject.title,
-            cover: subject.cover?.large?.url ?? subject.cover?.normal?.url,
-            author: info['作者'],
-            publisher: info['出版社'],
-            published: subject.extra?.year,
-            shortInfo: subject.extra?.short_info,
-            rating: rating?.value,
-            ratingCount: rating?.count,
-            roles: work.roles ?? [],
-            url: subject.url ?? `https://book.douban.com/subject/${subject.id}/`,
+    return {
+        subjectId: subject.id,
+        title: subject.title,
+        cover: subject.cover?.large?.url ?? subject.cover?.normal?.url,
+        author: info['作者'],
+        publisher: info['出版社'],
+        published: subject.extra?.year,
+        shortInfo: subject.extra?.short_info,
+        rating: rating?.value,
+        ratingCount: rating?.count,
+        roles: work.roles ?? [],
+        url: subject.url ?? `https://book.douban.com/subject/${subject.id}/`,
+    };
+}
+
+async function fetchBookIsbn(subjectId: string) {
+    const response = await got.get(`https://book.douban.com/subject/${subjectId}/`, {
+        headers: {
+            ...doubanHeaders,
+            Referer: 'https://book.douban.com/',
         },
-    ];
+    });
+    const $ = load(response.data);
+    const metaValue = $('meta[property="book:isbn"]').attr('content');
+    const infoValue = $('#info')
+        .text()
+        .match(/ISBN:\s*([\dX-]+)/i)?.[1];
+
+    return {
+        isbn: normalizeIsbn(metaValue ?? infoValue),
+    };
+}
+
+function normalizeIsbn(value?: string) {
+    const normalized = value?.replaceAll(/[^\dX]/gi, '').toUpperCase();
+
+    return normalized && (normalized.length === 10 || normalized.length === 13) ? normalized : undefined;
 }
