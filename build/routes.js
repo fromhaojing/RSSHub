@@ -38075,6 +38075,34 @@ export default {
       }
     },
     "apiRoutes": {
+      "/book/authorWorks/:personageId": {
+        "path": "/book/authorWorks/:personageId",
+        "maintainers": [
+          "lyqluis"
+        ],
+        "parameters": {
+          "personageId": {
+            "description": "豆瓣人物 ID，例如 `27484095`。"
+          }
+        },
+        "description": "获取豆瓣人物关联的最近图书作品。",
+        "location": "book/author-works.ts",
+        "module": () => import('@/routes/douban/book/author-works.ts')
+      },
+      "/book/authorProfile/:personageId": {
+        "path": "/book/authorProfile/:personageId",
+        "maintainers": [
+          "lyqluis"
+        ],
+        "parameters": {
+          "personageId": {
+            "description": "豆瓣人物 ID，例如 `27484095`。"
+          }
+        },
+        "description": "获取豆瓣人物的作者资料、头像和图书作品总数。",
+        "location": "book/author-profile.ts",
+        "module": () => import('@/routes/douban/book/author-profile.ts')
+      },
       "/book/isbnDetail/:isbn": {
         "path": "/book/isbnDetail/:isbn",
         "maintainers": [
