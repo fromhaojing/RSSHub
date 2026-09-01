@@ -38075,6 +38075,20 @@
       }
     },
     "apiRoutes": {
+      "/book/authorProfile/:personageId": {
+        "path": "/book/authorProfile/:personageId",
+        "maintainers": [
+          "lyqluis"
+        ],
+        "parameters": {
+          "personageId": {
+            "description": "豆瓣人物 ID，例如 `27484095`。"
+          }
+        },
+        "description": "获取豆瓣人物的作者资料、头像和图书作品总数。",
+        "location": "book/author-profile.ts",
+        "module": "() => import('@/routes/douban/book/author-profile.ts')"
+      },
       "/book/authorWorks/:personageId": {
         "path": "/book/authorWorks/:personageId",
         "maintainers": [
